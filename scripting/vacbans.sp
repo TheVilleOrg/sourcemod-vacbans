@@ -1,84 +1,10 @@
 /**
  *
  * VAC Status Checker
- * http://forums.alliedmods.net/showthread.php?t=80942
+ * https://forums.alliedmods.net/showthread.php?t=80942
  *
- * Description:
- * Checks for VAC, game, Steam Community, and trade bans on the accounts of connecting clients and
- * takes the desired action. Useful for admins who want to block access to people for bad behavior
- * outside the server.
- *
- * Requirements:
- *   - Socket Extension by sfPlayer (http://forums.alliedmods.net/showthread.php?t=67640)
- *
- * Credits:
- *   - voogru: finding the algorithm for converting SteamIDs
- *   - berni & StrontiumDog: the function that converts SteamIDs
- *   - Cripix: French translation
- *   - Dreizehnt: Russian translation
- *
- * Changelog:
- * Oct 09, 2017 - v.2.2.0:
- *   [*] The API key is now optional
- * Oct 03, 2017 - v.2.1.0:
- *   [*] Changed lookups to directly access the Steam Web API (requires key)
- *   [+] Added sm_vacbans_vac_ignore_before to ignore VAC bans before a specific date
- *   [+] Replaced sm_vacbans_action with sm_vacbans_actions for more options
- * Feb 21, 2017 - v.2.0.0:
- *   [*] Switched to the Steam Web API
- *   [+] Added detection of game, Steam Community, and trade bans
- *   [+] Added ConVars to control the types of bans that are detected
- *   [+] Added option to ignore VAC bans after a specified number of days
- *   [+] Added admin command to list the bans of connected clients
- *   [*] Changed the default action to kick
- *   [*] Changed the default cache time to 1 day
- *   [*] Added fallback to cached data when there is an error
- *   [*] Fixed new database connections being created on every map change
- * Mar 08, 2015 - v.1.4.3:
- *   [*] Fixed missing client name in admin messages
- * Feb 22, 2015 - v.1.4.2:
- *   [*] Fixed handling of incorrect usage of sm_vacbans_whitelist
- *   [*] Changed console commands to admin commands
- * Feb 12, 2015 - v.1.4.1:
- *   [*] Updated sm_vacbans_whitelist to accept new SteamIDs
- *   [+] Added option to alert admins to VAC banned players
- * Feb 07, 2015 - v.1.4.0:
- *   [*] Updated to support SourceMod 1.7
- *   [*] Fixed DataPack operation out of bounds errors
- * Nov 15, 2013 - v.1.3.6:
- *   [*] Fixed DataPack operation out of bounds errors
- * Mar 27, 2013 - v.1.3.5:
- *   [*] Fixed bans firing too early
- * Sep 04, 2011 - v.1.3.4:
- *   [*] Fixed some race conditions
- * Feb 09, 2010 - v.1.3.3:
- *   [+] Added filter for bots on client checks
- * Jul 24, 2009 - v.1.3.2:
- *   [*] Fixed logging error
- * Jul 18, 2009 - v.1.3.1:
- *   [*] Removed format from translations to fix odd error
- * May 25, 2009 - v.1.3.0:
- *   [+] Added support for other named database configs
- * Apr 13, 2009 - v.1.2.1:
- *   [*] Fixed conversion of long SteamIDs (StrontiumDog)
- * Mar 26, 2009 - v.1.2.0:
- *   [+] Added whitelist support
- *   [*] Changed some messages to reflect the plugin name
- * Mar 19, 2009 - v.1.1.1:
- *   [*] Fixed bans triggering before client is in-game
- *   [-] Removed dependency on the regex extension
- *   [+] Added logging to vacbans.log for all action settings
- * Feb 23, 2009 - v.1.1.0:
- *   [*] Now uses DataPacks instead of files for data storage
- *   [+] Added RegEx to scan raw downloaded data
- *   [+] Verifies client against original ID after scanning profile
- *   [*] Now uses FriendID instead of SteamID for the database keys
- *   [*] Various code organization improvements
- *   [+] Added command to reset the local cache database
- * Feb 19, 2009 - v.1.0.1:
- *   [*] Changed file naming to avoid conflicts
- * Nov 24, 2008 - v.1.0.0:
- *   [*] Initial Release
+ * Licensed under the GNU General Public License v3.0
+ * Source Repo: https://github.com/stevotvr/sourcemod-vacbans
  *
  */
 
