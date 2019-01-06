@@ -1,0 +1,157 @@
+﻿"Phrases"
+{
+	"ConVar_Version"
+	{
+		"en"		"VAC Status Checker plugin version"
+	}
+	"ConVar_DB"
+	{
+		"en"		"The named database config to use for caching"
+	}
+	"ConVar_APIKey"
+	{
+		"en"		"The Steam Web API key used by VAC Status Checker\nhttps://steamcommunity.com/dev/apikey"
+	}
+	"ConVar_CacheTime"
+	{
+		"en"		"How long in days before re-checking the same client"
+	}
+	"ConVar_Action"
+	{
+		"en"		"Deprecated. Use sm_vacbans_actions"
+	}
+	"ConVar_Actions"
+	{
+		"en"		"Actions to take on detected clients\nAdd up the options from the list:\n1:  Log to sourcemod/logs/vacbans.log\n2:  Kick\n4:  Ban\n8:  Display message to admins\n16: Display message to all players"
+	}
+	"ConVar_Detect_VAC"
+	{
+		"en"		"Enable VAC ban detection"
+	}
+	"ConVar_VAC_Expire"
+	{
+		"en"		"Ignore VAC bans older than this many days (0 = disabled)"
+	}
+	"ConVar_VAC_Ignore_Before"
+	{
+		"en"		"Ignore VAC bans issued before this date (format: YYYY-MM-DD)"
+	}
+	"ConVar_Detect_Game"
+	{
+		"en"		"Enable game ban detection"
+	}
+	"ConVar_Detect_Community"
+	{
+		"en"		"Enable Steam Community ban detection"
+	}
+	"ConVar_Detect_Econ"
+	{
+		"en"		"Enable economy (trade) ban detection (0 = disabled, 1 = bans only, 2 = bans and probation)"
+	}
+	"Command_Reset"
+	{
+		"en"		"Clears the vacbans cache database"
+	}
+	"Command_Whitelist"
+	{
+		"en"		"Controls the vacbans whitelist"
+	}
+	"Command_List"
+	{
+		"en"		"Lists the bans of connected clients"
+	}
+	"Message_Reset"
+	{
+		"en"		"The VAC Status Checker cache has been reset"
+	}
+	"Message_Usage"
+	{
+		"en"		"Usage"
+	}
+	"Message_Whitelist_Added"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} was added to the VAC Status Checker whitelist"
+	}
+	"Message_Whitelist_Removed"
+	{
+		"#format"	"{1:s}"
+		"en"		"{1} was removed from the VAC Status Checker whitelist"
+	}
+	"Message_Whitelist_Cleared"
+	{
+		"en"		"The VAC Status Checker whitelist was cleared"
+	}
+	"Message_List"
+	{
+		"en"		"Listing bans of all connected clients:"
+	}
+	"Error_Socket"
+	{
+		"#format"	"{1:d},{2:d}"
+		"en"		"Socket error {1} (errno {2})"
+	}
+	"Kicked"
+	{
+		"en"		"kicked"
+	}
+	"Banned"
+	{
+		"en"		"banned"
+	}
+	"Log_Banned"
+	{
+		"#format"	"{1:s},{2:t}"
+		"en"		"{1} was banned due to {2} on record"
+	}
+	"Player_Message"
+	{
+		"#format"	"{1:t},{2:t}"
+		"en"		"You were {1} due to {2} on your account"
+	}
+	"Admin_Message"
+	{
+		"#format"	"{1:d},{2:d},{3:t},{4:t}"
+		"en"		"VAC bans: {1}, Game bans: {2}, Community: {3}, Economy: {4}"
+	}
+	"Status_None"
+	{
+		"en"		"CLEAN"
+	}
+	"Status_Banned"
+	{
+		"en"		"BANNED"
+	}
+	"Status_Probation"
+	{
+		"en"		"PROBATION"
+	}
+	"VAC_Ban"
+	{
+		"en"		"a VAC ban"
+	}
+	"Game_Ban"
+	{
+		"en"		"a game ban"
+	}
+	"VAC_Ban_Plural"
+	{
+		"en"		"VAC bans"
+	}
+	"Game_Ban_Plural"
+	{
+		"en"		"game bans"
+	}
+	"Community_Ban"
+	{
+		"en"		"a Steam Community ban"
+	}
+	"Economy_Ban"
+	{
+		"en"		"an economy ban"
+	}
+	"Economy_Probation"
+	{
+		"en"		"economy probation"
+	}
+}

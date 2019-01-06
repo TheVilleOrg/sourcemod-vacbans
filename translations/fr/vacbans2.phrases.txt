@@ -1,0 +1,145 @@
+﻿"Phrases"
+{
+	"ConVar_Version"
+	{
+		"fr"		"Version du plugin de VAC Status Checker"
+	}
+	"ConVar_DB"
+	{
+		"fr"		"le nom de la base de données a été utilisé pour la mise en cache" 
+	}
+	"ConVar_CacheTime"
+	{
+		"fr"		"Combien de jour avant que le joueur soit re-verifier"
+	}
+	"ConVar_Action"
+	{
+		"fr"		"Action à prendre sur les clients détectés (0 = ban, 1 = kick, 2 = alert admins, 3 = log only)"
+	}
+	"ConVar_Detect_VAC"
+	{
+		"fr"		"Activé la detection VAC BAN"
+	}
+	"ConVar_VAC_Expire"
+	{
+		"fr"		"Igonrer les VAC BAN plus ancien que ce nombre de jours (0 = desativer)"
+	}
+	"ConVar_Detect_Game"
+	{
+		"fr"		"Activé la détection en jeu"
+	}
+	"ConVar_Detect_Community"
+	{
+		"fr"		"Activé la detection de Steam community"
+	}
+	"ConVar_Detect_Econ"
+	{
+		"fr"		"Activé la detection de ban de trade (0 = disabled, 1 = bans only, 2 = bans and probation)"
+	}
+	"Command_Reset"
+	{
+		"fr"		"Efface la base de données cache de Vac Ban"
+	}
+	"Command_Whitelist"
+	{
+		"fr"		"Contrôle la liste blanche des Vac Ban'
+	}
+	"Command_List"
+	{
+		"fr"		"Liste des bans des clients connectés"
+	}
+	"Message_Reset"
+	{
+		"fr"		"Le cache de VAC Status Checker a ete réinitialisé"
+	}
+	"Message_Usage"
+	{
+		"fr"		"Utiliser"
+	}
+	"Message_Whitelist_Added"
+	{
+		"#format"	"{1:s}"
+		"fr"		"{1} a été ajouté a la whitelist Vac Status Checker"
+	}
+	"Message_Whitelist_Removed"
+	{
+		"#format"	"{1:s}"
+		"fr"		"{1} a été retiré de la whitelist Vac Status Checker"		
+	}
+	"Message_Whitelist_Cleared"
+	{
+		"fr"		"La whitelist VAC Status Checker a été nettoyé"
+	}
+	"Message_List"
+	{
+		"fr"		"Liste des clients connectés bannis:"
+	}
+	"Error_Socket"
+	{
+		"#format"	"{1:d},{2:d}"
+		"fr"		"Erreur de Socket {1} (erreur {2})"
+	}
+	"Kicked"
+	{
+		"fr"		"Expulser"
+	}
+	"Banned"
+	{
+		"fr"		"Banni"
+	}
+	"Log_Banned"
+	{
+		"#format"	"{1:s},{2:t}"
+		"fr"		"{1} a été banni en raison de {2} enregistré"
+	}
+	"Player_Message"
+	{
+		"#format"	"{1:t},{2:t}"
+		"fr"		"Vous étiez {1} à cause de {2} sur votre compte"
+	}
+	"Admin_Message"
+	{
+		"#format"	"{1:d},{2:d},{3:t},{4:t}"
+		"fr"		"Ban VAC: {1}, Un bannissement de jeu: {2}, Steam Community: {3}, Trade: {4}"
+	}
+	"Status_None"
+	{
+		"fr"		"NETTOYER"
+	}
+	"Status_Banned"
+	{
+		"fr"		"BANNI"
+	}
+	"Status_Probation"
+	{
+		"fr"		"PROBATION"
+	}
+	"VAC_Ban"
+	{
+		"fr"		"Un Ban VAC"
+	}
+	"Game_Ban"
+	{
+		"fr"		"Un bannissement de jeu"
+	}
+	"VAC_Ban_Plural"
+	{
+		"fr"		"Des Bans Vac"
+	}
+	"Game_Ban_Plural"
+	{
+		"fr"		"Des bannissements de jeux"
+	}
+	"Community_Ban"
+	{
+		"fr"		"Un bannissement de Steam community"
+	}
+	"Economy_Ban"
+	{
+		"fr"		"Un bannissement de Trade"
+	}
+	"Economy_Probation"
+	{
+		"fr"		"Un Probation de Trade"
+	}
+}

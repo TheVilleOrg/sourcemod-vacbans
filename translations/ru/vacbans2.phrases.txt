@@ -1,0 +1,145 @@
+"Phrases"
+{
+	"ConVar_Version"
+	{
+		"ru"		"Версия плагина VAC Status Checker"
+	}
+	"ConVar_DB"
+	{
+		"ru"		"Заголовок базы данных в databases.cfg, если нужны записи"
+	}
+	"ConVar_CacheTime"
+	{
+		"ru"		"Как долго ждать для повторной проверки игрока (в днях)"
+	}
+	"ConVar_Action"
+	{
+		"ru"		"Наказания для обнаруженных с VAC игроков (0 =бан,1 =кик,2 =сообщ. адм.,3 =в лог)"
+	}
+	"ConVar_Detect_VAC"
+	{
+		"ru"		"Включить обнаружение VAC-бана"
+	}
+	"ConVar_VAC_Expire"
+	{
+		"ru"		"Игнорировать VAC-бан старше этого количества дней (0 =не учитывать)"
+	}
+	"ConVar_Detect_Game"
+	{
+		"ru"		"Включить онаружение игровых банов"
+	}
+	"ConVar_Detect_Community"
+	{
+		"ru"		"Включить обнаружение банов сообщества Steam"
+	}
+	"ConVar_Detect_Econ"
+	{
+		"ru"		"Включить обнаружение банов трейда (0 =не учитывать,1 =бан,2 =бан на срок)"
+	}
+	"Command_Reset"
+	{
+		"ru"		"Очистить кеш базы данных с VAC-банами"
+	}
+	"Command_Whitelist"
+	{
+		"ru"		"Проверить белый список VAC-банов"
+	}
+	"Command_List"
+	{
+		"ru"		"Списки банов подключенных игроков"
+	}
+	"Message_Reset"
+	{
+		"ru"		"Кеш VAC Status Checker был перезагружен"
+	}
+	"Message_Usage"
+	{
+		"ru"		"Используйте"
+	}
+	"Message_Whitelist_Added"
+	{
+		"#format"	"{1:s}"
+		"ru"		"{1} был добавлен в белый список VAC Status Checker"
+	}
+	"Message_Whitelist_Removed"
+	{
+		"#format"	"{1:s}"
+		"ru"		"{1} был удалён из белого списка VAC Status Checker"
+	}
+	"Message_Whitelist_Cleared"
+	{
+		"ru"		"Белый список VAC Status Checker был очищен"
+	}
+	"Message_List"
+	{
+		"ru"		"Список банов всех подключённых игроков:"
+	}
+	"Error_Socket"
+	{
+		"#format"	"{1:d},{2:d}"
+		"ru"		"Ошибка расширения Socket {1} (error {2})"
+	}
+	"Kicked"
+	{
+		"ru"		"кикнут"
+	}
+	"Banned"
+	{
+		"ru"		"забанен"
+	}
+	"Log_Banned"
+	{
+		"#format"	"{1:s},{2:t}"
+		"ru"		"{1} был забанен из-за {2}"
+	}
+	"Player_Message"
+	{
+		"#format"	"{1:t},{2:t}"
+		"ru"		"Вы были {1} из-за {2} на Вашем аккаунте"
+	}
+	"Admin_Message"
+	{
+		"#format"	"{1:d},{2:d},{3:t},{4:t}"
+		"ru"		"VAC-баны: {1}, Игровые: {2}, Сообщество: {3}, Трейд: {4}"
+	}
+	"Status_None"
+	{
+		"ru"		"ОЧИЩЕН"
+	}
+	"Status_Banned"
+	{
+		"ru"		"ЗАБНЕН"
+	}
+	"Status_Probation"
+	{
+		"ru"		"УСЛОВНО"
+	}
+	"VAC_Ban"
+	{
+		"ru"		"VAC-бан"
+	}
+	"Game_Ban"
+	{
+		"ru"		"игровая блокировка"
+	}
+	"VAC_Ban_Plural"
+	{
+		"ru"		"VAC-баны"
+	}
+	"Game_Ban_Plural"
+	{
+		"ru"		"игровые блокировки"
+	}
+	"Community_Ban"
+	{
+		"ru"		"бан в сообществе Steam"
+	}
+	"Economy_Ban"
+	{
+		"ru"		"бан трейда"
+	}
+	"Economy_Probation"
+	{
+		"ru"		"временный бан трейда"
+	}
+}
