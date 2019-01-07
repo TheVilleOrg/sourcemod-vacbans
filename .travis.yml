@@ -16,9 +16,9 @@ env:
   - SOURCEMOD=1.10
 
 before_script:
-  - cp -r scripting/* addons/sourcemod/scripting
   - wget "https://www.sourcemod.net/latest.php?version=$SOURCEMOD&os=linux" -O sourcemod-$SOURCEMOD-linux.tar.gz
   - tar -xzf sourcemod-$SOURCEMOD-linux.tar.gz
+  - cp -r scripting/* addons/sourcemod/scripting/
   - cd addons/sourcemod/scripting/
   - wget https://raw.githubusercontent.com/nefarius/sm-ext-socket/master/socket.inc -O include/socket.inc
   - chmod +x spcomp
