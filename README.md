@@ -1,5 +1,7 @@
 # VAC Status Checker
 
+[![Build Status](https://travis-ci.org/stevotvr/sourcemod-vacbans.svg)](https://travis-ci.org/stevotvr/sourcemod-vacbans)
+
 [Official AlliedModders Thread](http://forums.alliedmods.net/showthread.php?t=80942)
 
 Plugin for SourceMod that checks for VAC, game, Steam Community, and trade bans on the accounts of connecting clients and takes the desired action. Useful for admins who want to block access to people for bad behavior outside the server.
