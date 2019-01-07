@@ -2,26 +2,26 @@ sudo: false
 language: sourcepawn
 
 addons:
-	apt_packages:
-		- lib32stdc++6
+  apt_packages:
+    - lib32stdc++6
 
 matrix:
-	allow_failures:
-		- env: SOURCEMOD=1.10
+  allow_failures:
+    - env: SOURCEMOD=1.10
 
 env:
-	- SOURCEMOD=1.7
-	- SOURCEMOD=1.8
-	- SOURCEMOD=1.9
-	- SOURCEMOD=1.10
+  - SOURCEMOD=1.7
+  - SOURCEMOD=1.8
+  - SOURCEMOD=1.9
+  - SOURCEMOD=1.10
 
 before_script:
-	- cp -r scripting/* addons/sourcemod/scripting
-	- wget "http://www.sourcemod.net/latest.php?version=$SOURCEMOD&os=linux" -O sourcemod-$SOURCEMOD-linux.tar.gz
-	- tar -xzf sourcemod-$SOURCEMOD-linux.tar.gz
-	- cd addons/sourcemod/scripting/
-	- wget https://raw.githubusercontent.com/nefarius/sm-ext-socket/master/socket.inc -O include/socket.inc
-	- chmod +x spcomp
+  - cp -r scripting/* addons/sourcemod/scripting
+  - wget "https://www.sourcemod.net/latest.php?version=$SOURCEMOD&os=linux" -O sourcemod-$SOURCEMOD-linux.tar.gz
+  - tar -xzf sourcemod-$SOURCEMOD-linux.tar.gz
+  - cd addons/sourcemod/scripting/
+  - wget https://raw.githubusercontent.com/nefarius/sm-ext-socket/master/socket.inc -O include/socket.inc
+  - chmod +x spcomp
 
 script:
-	- ./compile.sh vacbans.sp
+  - ./compile.sh vacbans.sp
