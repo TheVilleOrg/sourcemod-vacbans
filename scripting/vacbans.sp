@@ -11,11 +11,18 @@
 #include <sourcemod>
 #include <socket>
 
+#undef REQUIRE_PLUGIN
+#tryinclude <updater>
+
 #pragma semicolon 1
 #pragma newdecls required
 
 #define PLUGIN_VERSION "2.2.0"
 #define DATABASE_VERSION 1
+
+#if defined _updater_included
+#define UPDATE_URL "http://dev.stevotvr.com/vacbans/updater/updatefile.txt"
+#endif
 
 #define ACTION_LOG 1
 #define ACTION_KICK 2
@@ -115,7 +122,24 @@ public void OnPluginStart()
 	RegAdminCmd("sm_vacbans_whitelist", Command_Whitelist, ADMFLAG_RCON, desc);
 	Format(desc, sizeof(desc), "%T", "Command_List", LANG_SERVER);
 	RegAdminCmd("sm_vacbans_list", Command_List, ADMFLAG_KICK, desc);
+
+	#if defined _updater_included
+	if (LibraryExists("updater"))
+	{
+		Updater_AddPlugin(UPDATE_URL);
+	}
+	#endif
 }
+
+#if defined _updater_included
+public void OnLibraryAdded(const char[] name)
+{
+	if (StrEqual(name, "updater"))
+	{
+		Updater_AddPlugin(UPDATE_URL);
+	}
+}
+#endif
 
 public void OnDBConVarChanged(ConVar convar, const char[] oldValue, const char[] newValue)
 {
