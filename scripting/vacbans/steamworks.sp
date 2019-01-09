@@ -16,7 +16,7 @@ void SteamWorksConnectToApi(int client, const char[] steamID)
 	SteamWorks_SendHTTPRequest(hRequest);
 }
 
-public void OnSteamWorksHTTPComplete(Handle hRequest, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, DataPack hPack)
+public int OnSteamWorksHTTPComplete(Handle hRequest, bool bFailure, bool bRequestSuccessful, EHTTPStatusCode eStatusCode, DataPack hPack)
 {
 	if (bRequestSuccessful && eStatusCode == k_EHTTPStatusCode200OK)
 	{
@@ -35,7 +35,7 @@ public void OnSteamWorksHTTPComplete(Handle hRequest, bool bFailure, bool bReque
 	}
 }
 
-public void OnSteamWorksHTTPBodyCallback(const char[] sData, DataPack hPack)
+public int OnSteamWorksHTTPBodyCallback(const char[] sData, DataPack hPack)
 {
 	hPack.Reset();
 	int client = hPack.ReadCell();
