@@ -9,7 +9,10 @@
  */
 
 #include <sourcemod>
-#include <socket>
+
+#undef REQUIRE_EXTENSIONS
+#tryinclude <SteamWorks>
+#tryinclude <socket>
 
 #undef REQUIRE_PLUGIN
 #tryinclude <updater>
@@ -20,15 +23,22 @@
 #define PLUGIN_VERSION "2.2.0"
 #define DATABASE_VERSION 1
 
+#define DEBUG
+
 #if defined _updater_included
 #define UPDATE_URL "http://dev.stevotvr.com/vacbans/updater/updatefile.txt"
 #endif
+
+#define API_HOST "api.steampowered.com"
 
 #define ACTION_LOG 1
 #define ACTION_KICK 2
 #define ACTION_BAN 4
 #define ACTION_NOTIFY_ADMINS 8
 #define ACTION_NOTIFY_ALL 16
+
+#define SOCKET_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "SocketCreate") == FeatureStatus_Available)
+#define STEAMWORKS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "SteamWorks_CreateHTTPRequest") == FeatureStatus_Available)
 
 public Plugin myinfo =
 {
@@ -59,11 +69,6 @@ ConVar g_hCVDetectEconBans = null;
 char g_dbConfig[64];
 
 /**
- * The Steam Web API key
- */
-char g_apiKey[64];
-
-/**
  * The date before which VAC bans are ignored (YYYYMMDD)
  */
 int g_VACEpoch;
@@ -73,10 +78,44 @@ int g_VACEpoch;
  */
 int g_clientStatus[MAXPLAYERS + 1][5];
 
+/**
+ * The base URL path
+ */
+char g_baseUrl[128];
+
+#if defined DEBUG
+char g_debugLogPath[PLATFORM_MAX_PATH];
+#endif
+
+#if defined _socket_included
+#include "vacbans/socket.sp"
+#endif
+#if defined _SteamWorks_Included
+#include "vacbans/steamworks.sp"
+#endif
+
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	MarkNativeAsOptional("SocketCreate");
+	MarkNativeAsOptional("SocketSetArg");
+	MarkNativeAsOptional("SocketConnect");
+	MarkNativeAsOptional("SocketSend");
+
+	return APLRes_Success;
+}
+
 public void OnPluginStart()
 {
+#if defined DEBUG
+	BuildPath(Path_SM, g_debugLogPath, sizeof(g_debugLogPath), "logs/vacbans_debug.log");
+#endif
 	LoadTranslations("vacbans2.phrases");
 	char desc[256];
+
+	if (!SOCKET_AVAILABLE() && !STEAMWORKS_AVAILABLE())
+	{
+		SetFailState("Socket or SteamWorks extension required");
+	}
 
 	Format(desc, sizeof(desc), "%T", "ConVar_Version", LANG_SERVER);
 	CreateConVar("sm_vacbans_version", PLUGIN_VERSION, desc, FCVAR_SPONLY | FCVAR_REPLICATED | FCVAR_NOTIFY | FCVAR_DONTRECORD);
@@ -151,7 +190,9 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 {
 	if(convar == g_hCVAPIKey)
 	{
-		g_hCVAPIKey.GetString(g_apiKey, sizeof(g_apiKey));
+		char apiKey[64];
+		g_hCVAPIKey.GetString(apiKey, sizeof(apiKey));
+		Format(g_baseUrl, sizeof(g_baseUrl), "/ISteamUser/GetPlayerBans/v1/?key=%s&steamids=", apiKey);
 		return;
 	}
 
@@ -218,6 +259,10 @@ public void OnConfigsExecuted()
 		strcopy(g_dbConfig, sizeof(g_dbConfig), db);
 		Database.Connect(OnDBConnected, db);
 	}
+
+	char apiKey[64];
+	g_hCVAPIKey.GetString(apiKey, sizeof(apiKey));
+	Format(g_baseUrl, sizeof(g_baseUrl), "/ISteamUser/GetPlayerBans/v1/?key=%s&steamids=", apiKey);
 }
 
 public void OnClientConnected(int client)
@@ -242,77 +287,6 @@ public void OnClientPostAdminCheck(int client)
 			g_hDatabase.Query(OnQueryPlayerLookup, query, hPack);
 		}
 	}
-}
-
-public int OnSocketConnected(Handle hSock, DataPack hPack)
-{
-	char steamID[18];
-	char requestStr[256];
-
-	hPack.Reset();
-	hPack.ReadCell();
-	hPack.ReadCell();
-	hPack.ReadString(steamID, sizeof(steamID));
-
-	if(strlen(g_apiKey) > 0)
-	{
-		Format(requestStr, sizeof(requestStr), "GET /ISteamUser/GetPlayerBans/v1/?key=%s&steamids=%s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\n\r\n", g_apiKey, steamID, "api.steampowered.com");
-	}
-	else
-	{
-		Format(requestStr, sizeof(requestStr), "GET /vacbans/v2/check/%s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\n\r\n", steamID, "dev.stevotvr.com");
-	}
-	SocketSend(hSock, requestStr);
-}
-
-public int OnSocketReceive(Handle hSock, const char[] receiveData, const int dataSize, DataPack hPack)
-{
-	hPack.Reset();
-	hPack.ReadCell();
-	DataPack hData = hPack.ReadCell();
-
-	hData.WriteString(receiveData);
-}
-
-public int OnSocketDisconnected(Handle hSock, DataPack hPack)
-{
-	hPack.Reset();
-	int client = hPack.ReadCell();
-	DataPack hData = hPack.ReadCell();
-	char steamID[18];
-	hPack.ReadString(steamID, sizeof(steamID));
-
-	hData.Reset();
-
-	char responseData[1024];
-	char buffer[1024];
-	while(hData.IsReadable(1)) {
-		hData.ReadString(buffer, sizeof(buffer));
-		StrCat(responseData, sizeof(responseData), buffer);
-	}
-
-	HandleClient(client, steamID, !ParseResponse(client, responseData));
-
-	delete hData;
-	delete hPack;
-
-	delete hSock;
-}
-
-public int OnSocketError(Handle hSock, const int errorType, const int errorNum, DataPack hPack)
-{
-	LogError("%T", "Error_Socket", LANG_SERVER, errorType, errorNum);
-
-	hPack.Reset();
-	int client = hPack.ReadCell();
-	hPack.ReadCell();
-	char steamID[18];
-	hPack.ReadString(steamID, sizeof(steamID));
-
-	HandleClient(client, steamID, true);
-
-	delete hPack;
-	delete hSock;
 }
 
 public Action Command_Reset(int client, int args)
@@ -414,42 +388,6 @@ public Action Command_List(int client, int args)
 }
 
 /**
- * Parse the HTTP response from the server.
- *
- * @param client   The client index
- * @param response The response from the server
- * @return Whether the response was successfully parsed
- */
-bool ParseResponse(int client, const char[] response)
-{
-	int pos = FindCharInString(response, ' ');
-	if(pos == -1)
-	{
-		return false;
-	}
-	char status[4];
-	if(SplitString(response[pos + 1], " ", status, sizeof(status)) == -1)
-	{
-		return false;
-	}
-	if(StringToInt(status) != 200)
-	{
-		return false;
-	}
-
-	char parts[2][1024];
-	if(ExplodeString(response, "\r\n\r\n", parts, sizeof(parts), sizeof(parts[])) < 2)
-	{
-		return false;
-	}
-
-	TrimString(parts[1]);
-	UpdateClientStatus(client, parts[1]);
-
-	return true;
-}
-
-/**
  * Update the client data based on the response data.
  *
  * @param client   The client index
@@ -457,6 +395,10 @@ bool ParseResponse(int client, const char[] response)
  */
 void UpdateClientStatus(int client, const char[] response)
 {
+#if defined DEBUG
+	LogToFile(g_debugLogPath, "Updating %L", client);
+	LogToFileEx(g_debugLogPath, response);
+#endif
 	g_clientStatus[client] = {0, 0, 0, 0, 0};
 
 	char responseData[1024];
@@ -809,24 +751,30 @@ public void OnQueryPlayerLookup(Database db, DBResultSet results, const char[] e
 	}
 	else
 	{
-		DataPack hPack = new DataPack();
-		DataPack hData = new DataPack();
-		Handle hSock = SocketCreate(SOCKET_TCP, OnSocketError);
-
-		hPack.WriteCell(client);
-		hPack.WriteCell(hData);
-		hPack.WriteString(steamID);
-
-		SocketSetArg(hSock, hPack);
-		if(strlen(g_apiKey) > 0)
-		{
-			SocketConnect(hSock, OnSocketConnected, OnSocketReceive, OnSocketDisconnected, "api.steampowered.com", 80);
-		}
-		else
-		{
-			SocketConnect(hSock, OnSocketConnected, OnSocketReceive, OnSocketDisconnected, "dev.stevotvr.com", 80);
-		}
+		ConnectToApi(client, steamID);
 	}
+}
+
+public
+
+void ConnectToApi(int client, const char[] steamID)
+{
+#if defined DEBUG
+	LogToFile(g_debugLogPath, "Checking client %L", client);
+#endif
+#if defined _SteamWorks_Included
+	if (STEAMWORKS_AVAILABLE())
+	{
+		SteamWorksConnectToApi(client, steamID);
+		return;
+	}
+#endif
+#if defined _socket_included
+	if (SOCKET_AVAILABLE())
+	{
+		SocketConnectToApi(client, steamID);
+	}
+#endif
 }
 
 public void OnQueryNoOp(Database db, DBResultSet results, const char[] error, any data)
