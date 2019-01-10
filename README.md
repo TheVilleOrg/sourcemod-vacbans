@@ -18,7 +18,7 @@ Plugin for SourceMod that checks for VAC, game, Steam Community, and trade bans 
 
  1. Download **vacbans-x.x.x.zip** from the [latest release](https://github.com/stevotvr/sourcemod-vacbans/releases/latest)
  2. Extract to **addons/sourcemod**
- 3. Set `sm_vacbans_apikey` to your Steam Web API
+ 3. Set `sm_vacbans_apikey` to your Steam Web API key
 
  ## Console Variables
 
