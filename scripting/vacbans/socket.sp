@@ -90,22 +90,24 @@ public int OnSocketError(Handle hSock, const int errorType, const int errorNum, 
 bool SocketParseResponse(int client, const char[] response)
 {
 	int pos = FindCharInString(response, ' ');
-	if(pos == -1)
+	if (pos == -1)
 	{
 		return false;
 	}
+
 	char status[4];
-	if(SplitString(response[pos + 1], " ", status, sizeof(status)) == -1)
+	if (SplitString(response[pos + 1], " ", status, sizeof(status)) == -1)
 	{
 		return false;
 	}
-	if(StringToInt(status) != 200)
+
+	if (StringToInt(status) != 200)
 	{
 		return false;
 	}
 
 	char parts[2][1024];
-	if(ExplodeString(response, "\r\n\r\n", parts, sizeof(parts), sizeof(parts[])) < 2)
+	if (ExplodeString(response, "\r\n\r\n", parts, sizeof(parts), sizeof(parts[])) < 2)
 	{
 		return false;
 	}
