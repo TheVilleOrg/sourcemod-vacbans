@@ -115,7 +115,7 @@ public void OnPluginStart()
 
 	if (!SOCKET_AVAILABLE() && !STEAMWORKS_AVAILABLE())
 	{
-		SetFailState("Socket or SteamWorks extension required");
+		SetFailState("%T", "Extension_Required", LANG_SERVER);
 	}
 
 	Format(desc, sizeof(desc), "%T", "ConVar_Version", LANG_SERVER);

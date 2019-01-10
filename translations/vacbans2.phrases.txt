@@ -86,14 +86,18 @@
 	{
 		"en"		"Listing bans of all connected clients:"
 	}
-	"Error_Socket"
+	"Extension_Required"
 	{
-		"#format"	"{1:d},{2:d}"
-		"en"		"Socket error {1} (errno {2})"
+		"en"		"Socket or SteamWorks extension required"
 	}
 	"Error_Key_Required"
 	{
 		"en"		"VAC Status Checker requires a Steam Web API key for player lookups. Get your key from https://steamcommunity.com/dev/apikey"
+	}
+	"Error_Socket"
+	{
+		"#format"	"{1:d},{2:d}"
+		"en"		"Socket error {1} (errno {2})"
 	}
 	"Kicked"
 	{
