@@ -91,6 +91,10 @@
 		"#format"	"{1:d},{2:d}"
 		"en"		"Socket error {1} (errno {2})"
 	}
+	"Error_Key_Required"
+	{
+		"en"		"VAC Status Checker requires a Steam Web API key for player lookups. Get your key from https://steamcommunity.com/dev/apikey"
+	}
 	"Kicked"
 	{
 		"en"		"kicked"

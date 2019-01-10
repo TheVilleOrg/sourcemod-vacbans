@@ -190,9 +190,7 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 {
 	if(convar == g_hCVAPIKey)
 	{
-		char apiKey[64];
-		g_hCVAPIKey.GetString(apiKey, sizeof(apiKey));
-		Format(g_baseUrl, sizeof(g_baseUrl), "/ISteamUser/GetPlayerBans/v1/?key=%s&steamids=", apiKey);
+		UpdateBaseUrl();
 		return;
 	}
 
@@ -260,8 +258,20 @@ public void OnConfigsExecuted()
 		Database.Connect(OnDBConnected, db);
 	}
 
+	UpdateBaseUrl();
+}
+
+void UpdateBaseUrl()
+{
 	char apiKey[64];
 	g_hCVAPIKey.GetString(apiKey, sizeof(apiKey));
+	if(strlen(apiKey) == 0)
+	{
+		g_baseUrl = "";
+		LogError("%T", "Error_Key_Required", LANG_SERVER);
+		return;
+	}
+
 	Format(g_baseUrl, sizeof(g_baseUrl), "/ISteamUser/GetPlayerBans/v1/?key=%s&steamids=", apiKey);
 }
 
@@ -759,6 +769,10 @@ public
 
 void ConnectToApi(int client, const char[] steamID)
 {
+	if (strlen(g_baseUrl) == 0)
+	{
+		return;
+	}
 #if defined DEBUG
 	LogToFile(g_debugLogPath, "Checking client %L", client);
 #endif
