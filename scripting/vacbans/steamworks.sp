@@ -27,11 +27,11 @@ public int OnSteamWorksHTTPComplete(Handle hRequest, bool bFailure, bool bReques
 	{
 		if (bRequestSuccessful)
 		{
-			LogError("%T", "Error_HTTP", LANG_SERVER, eStatusCode);
+			LogError("HTTP error: %d (using SteamWorks)", eStatusCode);
 		}
 		else
 		{
-			LogError("%T", "Error_Request", LANG_SERVER);
+			LogError("SteamWorks error", LANG_SERVER);
 		}
 
 		hPack.Reset();

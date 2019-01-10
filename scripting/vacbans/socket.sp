@@ -66,7 +66,7 @@ public int OnSocketDisconnected(Handle hSock, DataPack hPack)
 
 public int OnSocketError(Handle hSock, const int errorType, const int errorNum, DataPack hPack)
 {
-	LogError("%T", "Error_Socket", LANG_SERVER, errorType, errorNum);
+	LogError("Socket error: %d (errno %d)", errorType, errorNum);
 
 	hPack.Reset();
 	int client = hPack.ReadCell();
@@ -104,7 +104,10 @@ bool SocketParseResponse(int client, const char[] response)
 	int code = StringToInt(status);
 	if (code != 200)
 	{
-		LogError("%T", "Error_HTTP", LANG_SERVER, code);
+		char message[64];
+		SplitString(response[pos + 5], "\n", message, sizeof(message));
+		TrimString(message);
+		LogError("HTTP error: %d %s (using Socket)", code, message);
 
 		return false;
 	}

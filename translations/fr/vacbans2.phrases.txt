@@ -6,7 +6,7 @@
 	}
 	"ConVar_DB"
 	{
-		"fr"		"le nom de la base de données a été utilisé pour la mise en cache" 
+		"fr"		"le nom de la base de données a été utilisé pour la mise en cache"
 	}
 	"ConVar_CacheTime"
 	{
@@ -64,7 +64,7 @@
 	"Message_Whitelist_Removed"
 	{
 		"#format"	"{1:s}"
-		"fr"		"{1} a été retiré de la whitelist Vac Status Checker"		
+		"fr"		"{1} a été retiré de la whitelist Vac Status Checker"
 	}
 	"Message_Whitelist_Cleared"
 	{
@@ -73,11 +73,6 @@
 	"Message_List"
 	{
 		"fr"		"Liste des clients connectés bannis:"
-	}
-	"Error_Socket"
-	{
-		"#format"	"{1:d},{2:d}"
-		"fr"		"Erreur de Socket {1} (erreur {2})"
 	}
 	"Kicked"
 	{
