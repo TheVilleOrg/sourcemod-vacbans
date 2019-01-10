@@ -1,6 +1,8 @@
 # VAC Status Checker
 
 [![Build Status](https://travis-ci.org/stevotvr/sourcemod-vacbans.svg)](https://travis-ci.org/stevotvr/sourcemod-vacbans)
+[![Latest Release](https://img.shields.io/github/release/stevotvr/sourcemod-vacbans.svg)](https://github.com/stevotvr/sourcemod-vacbans/releases/latest)
+[![Total Downloads](https://img.shields.io/github/downloads/stevotvr/sourcemod-vacbans/total.svg)](https://github.com/stevotvr/sourcemod-vacbans/releases)
 
 [Official AlliedModders Thread](http://forums.alliedmods.net/showthread.php?t=80942)
 
