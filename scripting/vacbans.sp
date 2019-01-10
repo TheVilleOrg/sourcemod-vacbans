@@ -43,10 +43,10 @@
 public Plugin myinfo =
 {
 	name = "VAC Status Checker",
-	author = "Stevo.TVR",
+	author = "StevoTVR",
 	description = "Checks for VAC, game, Steam Community, and trade bans on the accounts of connecting clients",
 	version = PLUGIN_VERSION,
-	url = "http://www.theville.org"
+	url = "https://github.com/stevotvr/sourcemod-vacbans"
 }
 
 Database g_hDatabase = null;
