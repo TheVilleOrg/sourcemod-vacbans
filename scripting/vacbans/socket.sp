@@ -101,8 +101,11 @@ bool SocketParseResponse(int client, const char[] response)
 		return false;
 	}
 
-	if (StringToInt(status) != 200)
+	int code = StringToInt(status);
+	if (code != 200)
 	{
+		LogError("%T", "Error_HTTP", LANG_SERVER, code);
+
 		return false;
 	}
 

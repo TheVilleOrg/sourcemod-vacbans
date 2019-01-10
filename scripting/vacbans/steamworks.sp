@@ -25,6 +25,15 @@ public int OnSteamWorksHTTPComplete(Handle hRequest, bool bFailure, bool bReques
 	}
 	else
 	{
+		if (bRequestSuccessful)
+		{
+			LogError("%T", "Error_HTTP", LANG_SERVER, eStatusCode);
+		}
+		else
+		{
+			LogError("%T", "Error_Request", LANG_SERVER);
+		}
+
 		hPack.Reset();
 		int client = hPack.ReadCell();
 		char steamID[18];

@@ -94,6 +94,15 @@
 	{
 		"en"		"VAC Status Checker requires a Steam Web API key for player lookups. Get your key from https://steamcommunity.com/dev/apikey"
 	}
+	"Error_HTTP"
+	{
+		"#format"	"{1:d}"
+		"en"		"Received invalid HTTP response code {1}"
+	}
+	"Error_Request"
+	{
+		"en"		"Web request failed"
+	}
 	"Error_Socket"
 	{
 		"#format"	"{1:d},{2:d}"
