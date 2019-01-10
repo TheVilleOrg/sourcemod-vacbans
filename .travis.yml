@@ -21,8 +21,9 @@ before_script:
   - cp -r scripting/* addons/sourcemod/scripting/
   - cd addons/sourcemod/scripting/
   - wget https://bitbucket.org/GoD_Tony/updater/raw/53ebb3e27e5a43bc46dc52dc0de76ac2fb48cd9e/include/updater.inc -O include/updater.inc
-  - wget https://raw.githubusercontent.com/nefarius/sm-ext-socket/master/socket.inc -O include/socket.inc
   - wget https://raw.githubusercontent.com/KyleSanderson/SteamWorks/master/Pawn/includes/SteamWorks.inc -O include/SteamWorks.inc
+  - wget https://raw.githubusercontent.com/asherkin/SteamTools/master/plugin/steamtools.inc -O include/steamtools.inc
+  - wget https://raw.githubusercontent.com/nefarius/sm-ext-socket/master/socket.inc -O include/socket.inc
   - chmod +x spcomp
 
 script:

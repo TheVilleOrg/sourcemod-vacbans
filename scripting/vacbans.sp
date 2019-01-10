@@ -12,6 +12,7 @@
 
 #undef REQUIRE_EXTENSIONS
 #tryinclude <SteamWorks>
+#tryinclude <steamtools>
 #tryinclude <socket>
 
 #undef REQUIRE_PLUGIN
@@ -37,8 +38,9 @@
 #define ACTION_NOTIFY_ADMINS 8
 #define ACTION_NOTIFY_ALL 16
 
-#define SOCKET_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "SocketCreate") == FeatureStatus_Available)
 #define STEAMWORKS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "SteamWorks_CreateHTTPRequest") == FeatureStatus_Available)
+#define STEAMTOOLS_AVAILABLE()	(GetFeatureStatus(FeatureType_Native, "Steam_CreateHTTPRequest") == FeatureStatus_Available)
+#define SOCKET_AVAILABLE()		(GetFeatureStatus(FeatureType_Native, "SocketCreate") == FeatureStatus_Available)
 
 public Plugin myinfo =
 {
@@ -87,15 +89,23 @@ char g_baseUrl[128];
 char g_debugLogPath[PLATFORM_MAX_PATH];
 #endif
 
-#if defined _socket_included
-#include "vacbans/socket.sp"
+#if defined _steamtools_included
+#include "vacbans/steamtools.sp"
 #endif
 #if defined _SteamWorks_Included
 #include "vacbans/steamworks.sp"
 #endif
+#if defined _socket_included
+#include "vacbans/socket.sp"
+#endif
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+	MarkNativeAsOptional("Steam_CreateHTTPRequest");
+	MarkNativeAsOptional("Steam_SendHTTPRequest");
+	MarkNativeAsOptional("Steam_GetHTTPResponseBodyData");
+	MarkNativeAsOptional("Steam_ReleaseHTTPRequest");
+
 	MarkNativeAsOptional("SocketCreate");
 	MarkNativeAsOptional("SocketSetArg");
 	MarkNativeAsOptional("SocketConnect");
@@ -113,7 +123,7 @@ public void OnPluginStart()
 	LoadTranslations("vacbans2.phrases");
 	char desc[256];
 
-	if (!SOCKET_AVAILABLE() && !STEAMWORKS_AVAILABLE())
+	if (!STEAMWORKS_AVAILABLE() && !STEAMTOOLS_AVAILABLE() && !SOCKET_AVAILABLE())
 	{
 		SetFailState("%T", "Extension_Required", LANG_SERVER);
 	}
@@ -191,7 +201,7 @@ public void OnLibraryAdded(const char[] name)
 	{
 		InitUpdater();
 	}
-	else if (LibraryExists("updater") && (StrEqual(name, "Socket") || StrEqual(name, "SteamWorks")))
+	else if (LibraryExists("updater") && (StrEqual(name, "SteamWorks") || StrEqual(name, "SteamTools") || StrEqual(name, "Socket")))
 	{
 		Updater_RemovePlugin();
 		InitUpdater();
@@ -201,7 +211,7 @@ public void OnLibraryAdded(const char[] name)
 void InitUpdater()
 {
 	char url[128];
-	if (STEAMWORKS_AVAILABLE())
+	if (STEAMWORKS_AVAILABLE() || STEAMTOOLS_AVAILABLE())
 	{
 		Format(url, sizeof(url), "https:%s", UPDATE_URL);
 	}
@@ -812,6 +822,14 @@ void ConnectToApi(int client, const char[] steamID)
 
 #if defined DEBUG
 	LogToFile(g_debugLogPath, "Checking client %L", client);
+#endif
+
+#if defined _steamtools_included
+	if (STEAMTOOLS_AVAILABLE())
+	{
+		SteamToolsConnectToApi(client, steamID);
+		return;
+	}
 #endif
 
 #if defined _SteamWorks_Included

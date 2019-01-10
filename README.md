@@ -10,6 +10,7 @@ Plugin for SourceMod that checks for VAC, game, Steam Community, and trade bans 
 
  * One of the below extensions:
     * [SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)
+    * [SteamTools](https://forums.alliedmods.net/forumdisplay.php?f=147)
     * [Socket](https://forums.alliedmods.net/showthread.php?t=67640)
  * A Steam Web API key obtained from https://steamcommunity.com/dev/apikey
  * SourceMod 1.7+

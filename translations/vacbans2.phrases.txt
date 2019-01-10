@@ -88,7 +88,7 @@
 	}
 	"Extension_Required"
 	{
-		"en"		"Socket or SteamWorks extension required"
+		"en"		"SteamWorks, SteamTools, or Socket extension required"
 	}
 	"Error_Key_Required"
 	{
