@@ -89,12 +89,14 @@ char g_baseUrl[128];
 char g_debugLogPath[PLATFORM_MAX_PATH];
 #endif
 
-#if defined _steamtools_included
-#include "vacbans/steamtools.sp"
-#endif
 #if defined _SteamWorks_Included
 #include "vacbans/steamworks.sp"
 #endif
+
+#if defined _steamtools_included
+#include "vacbans/steamtools.sp"
+#endif
+
 #if defined _socket_included
 #include "vacbans/socket.sp"
 #endif
