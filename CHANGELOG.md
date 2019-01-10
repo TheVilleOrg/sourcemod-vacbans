@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.3.0 (Jan 10, 2019)
+
+ * Added support for the SteamWorks and SteamTools extensions
+ * Added support for Updater
+ * The API key is now required
+
 ## v2.2.0 (Oct 09, 2017)
 
  * The API key is now optional
