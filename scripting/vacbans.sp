@@ -79,7 +79,7 @@ int g_VACEpoch;
 int g_clientStatus[MAXPLAYERS + 1][5];
 
 /**
- * The base URL path
+ * The base URL path for the Steam Web API
  */
 char g_baseUrl[128];
 
@@ -109,6 +109,7 @@ public void OnPluginStart()
 #if defined DEBUG
 	BuildPath(Path_SM, g_debugLogPath, sizeof(g_debugLogPath), "logs/vacbans_debug.log");
 #endif
+
 	LoadTranslations("vacbans2.phrases");
 	char desc[256];
 
@@ -122,26 +123,37 @@ public void OnPluginStart()
 
 	Format(desc, sizeof(desc), "%T", "ConVar_DB", LANG_SERVER);
 	g_hCVDB = CreateConVar("sm_vacbans_db", "storage-local", desc);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_APIKey", LANG_SERVER);
 	g_hCVAPIKey = CreateConVar("sm_vacbans_apikey", "", desc, FCVAR_PROTECTED);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_CacheTime", LANG_SERVER);
 	g_hCVCacheTime = CreateConVar("sm_vacbans_cachetime", "1", desc, _, true, 0.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Action", LANG_SERVER);
 	g_hCVAction = CreateConVar("sm_vacbans_action", "-1", desc, FCVAR_DONTRECORD, true, -1.0, true, 3.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Actions", LANG_SERVER);
 	g_hCVActions = CreateConVar("sm_vacbans_actions", "3", desc, _, true, 0.0, true, 31.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_VAC", LANG_SERVER);
 	g_hCVDetectVACBans = CreateConVar("sm_vacbans_detect_vac_bans", "1", desc, _, true, 0.0, true, 1.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_VAC_Expire", LANG_SERVER);
 	g_hCVVACExpire = CreateConVar("sm_vacbans_vac_expire", "0", desc, _, true, 0.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_VAC_Ignore_Before", LANG_SERVER);
 	g_hCVVACEpoch = CreateConVar("sm_vacbans_vac_ignore_before", "", desc);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_Game", LANG_SERVER);
 	g_hCVDetectGameBans = CreateConVar("sm_vacbans_detect_game_bans", "0", desc, _, true, 0.0, true, 1.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_Community", LANG_SERVER);
 	g_hCVDetectCommunityBans = CreateConVar("sm_vacbans_detect_community_bans", "0", desc, _, true, 0.0, true, 1.0);
+
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_Econ", LANG_SERVER);
 	g_hCVDetectEconBans = CreateConVar("sm_vacbans_detect_econ_bans", "0", desc, _, true, 0.0, true, 2.0);
+
 	AutoExecConfig(true, "vacbans");
 
 	g_hCVDB.AddChangeHook(OnDBConVarChanged);
@@ -157,8 +169,10 @@ public void OnPluginStart()
 
 	Format(desc, sizeof(desc), "%T", "Command_Reset", LANG_SERVER);
 	RegAdminCmd("sm_vacbans_reset", Command_Reset, ADMFLAG_RCON, desc);
+
 	Format(desc, sizeof(desc), "%T", "Command_Whitelist", LANG_SERVER);
 	RegAdminCmd("sm_vacbans_whitelist", Command_Whitelist, ADMFLAG_RCON, desc);
+
 	Format(desc, sizeof(desc), "%T", "Command_List", LANG_SERVER);
 	RegAdminCmd("sm_vacbans_list", Command_List, ADMFLAG_KICK, desc);
 
@@ -195,6 +209,7 @@ void InitUpdater()
 	{
 		Format(url, sizeof(url), "http:%s", UPDATE_URL);
 	}
+
 	Updater_AddPlugin(url);
 }
 #endif
@@ -207,22 +222,22 @@ public void OnDBConVarChanged(ConVar convar, const char[] oldValue, const char[]
 
 public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] newValue)
 {
-	if(convar == g_hCVAPIKey)
+	if (convar == g_hCVAPIKey)
 	{
 		UpdateBaseUrl();
 		return;
 	}
 
-	if(convar == g_hCVVACEpoch)
+	if (convar == g_hCVVACEpoch)
 	{
 		g_VACEpoch = 0;
 
-		if(g_hCVVACEpoch.BoolValue)
+		if (g_hCVVACEpoch.BoolValue)
 		{
 			char dateString[11];
 			g_hCVVACEpoch.GetString(dateString, sizeof(dateString));
 			char toks[3][5];
-			if(ExplodeString(dateString, "-", toks, sizeof(toks), sizeof(toks[])) == 3 && strlen(toks[0]) == 4 && strlen(toks[1]) == 2 && strlen(toks[2]) == 2)
+			if (ExplodeString(dateString, "-", toks, sizeof(toks), sizeof(toks[])) == 3 && strlen(toks[0]) == 4 && strlen(toks[1]) == 2 && strlen(toks[2]) == 2)
 			{
 				ImplodeStrings(toks, sizeof(toks), "", dateString, sizeof(dateString));
 				g_VACEpoch = StringToInt(dateString);
@@ -230,9 +245,9 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 		}
 	}
 
-	if(convar == g_hCVAction)
+	if (convar == g_hCVAction)
 	{
-		switch(g_hCVAction.IntValue)
+		switch (g_hCVAction.IntValue)
 		{
 			case 0:
 			{
@@ -258,9 +273,9 @@ public void OnConVarChanged(ConVar convar, const char[] oldValue, const char[] n
 	}
 
 	char steamID[18];
-	for(int i = 1; i <= MaxClients; i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
-		if(IsClientAuthorized(i) && GetClientAuthId(i, AuthId_SteamID64, steamID, sizeof(steamID)))
+		if (IsClientAuthorized(i) && GetClientAuthId(i, AuthId_SteamID64, steamID, sizeof(steamID)))
 		{
 			HandleClient(i, steamID, true);
 		}
@@ -271,7 +286,7 @@ public void OnConfigsExecuted()
 {
 	char db[64];
 	g_hCVDB.GetString(db, sizeof(db));
-	if(!StrEqual(g_dbConfig, db))
+	if (!StrEqual(g_dbConfig, db))
 	{
 		strcopy(g_dbConfig, sizeof(g_dbConfig), db);
 		Database.Connect(OnDBConnected, db);
@@ -284,7 +299,7 @@ void UpdateBaseUrl()
 {
 	char apiKey[64];
 	g_hCVAPIKey.GetString(apiKey, sizeof(apiKey));
-	if(strlen(apiKey) == 0)
+	if (strlen(apiKey) == 0)
 	{
 		g_baseUrl = "";
 		LogError("%T", "Error_Key_Required", LANG_SERVER);
@@ -301,12 +316,12 @@ public void OnClientConnected(int client)
 
 public void OnClientPostAdminCheck(int client)
 {
-	if(!IsFakeClient(client))
+	if (!IsFakeClient(client))
 	{
 		char query[96];
 		char steamID[18];
 
-		if(GetClientAuthId(client, AuthId_SteamID64, steamID, sizeof(steamID)))
+		if (GetClientAuthId(client, AuthId_SteamID64, steamID, sizeof(steamID)))
 		{
 			DataPack hPack = new DataPack();
 			hPack.WriteCell(client);
@@ -334,14 +349,14 @@ public Action Command_Whitelist(int client, int args)
 
 	GetCmdArgString(argString, sizeof(argString));
 	int pos = BreakString(argString, action, sizeof(action));
-	if(pos > -1)
+	if (pos > -1)
 	{
 		strcopy(steamIDString, sizeof(steamIDString), argString[pos]);
 
-		if(GetSteamID64(steamIDString, steamID, sizeof(steamID)))
+		if (GetSteamID64(steamIDString, steamID, sizeof(steamID)))
 		{
 			char query[128];
-			if(StrEqual(action, "add"))
+			if (StrEqual(action, "add"))
 			{
 				Format(query, sizeof(query), "REPLACE INTO `vacbans_cache` (`steam_id`, `expire`) VALUES ('%s', 0);", steamID);
 				g_hDatabase.Query(OnQueryNoOp, query);
@@ -350,7 +365,8 @@ public Action Command_Whitelist(int client, int args)
 
 				return Plugin_Handled;
 			}
-			if(StrEqual(action, "remove"))
+
+			if (StrEqual(action, "remove"))
 			{
 				Format(query, sizeof(query), "DELETE FROM `vacbans_cache` WHERE `steam_id` = '%s';", steamID);
 				g_hDatabase.Query(OnQueryNoOp, query);
@@ -363,7 +379,7 @@ public Action Command_Whitelist(int client, int args)
 	}
 	else
 	{
-		if(StrEqual(action, "clear"))
+		if (StrEqual(action, "clear"))
 		{
 			g_hDatabase.Query(OnQueryNoOp, "DELETE FROM `vacbans_cache` WHERE `expire` = 0;");
 
@@ -384,14 +400,14 @@ public Action Command_List(int client, int args)
 	int status[5];
 	char commStatusText[16];
 	char econStatusText[24];
-	for(int i = 1; i <= MaxClients; i++)
+	for (int i = 1; i <= MaxClients; i++)
 	{
-		if(IsClientAuthorized(i))
+		if (IsClientAuthorized(i))
 		{
 			status = g_clientStatus[i];
-			if(status[0] > 0 || status[2] > 0 || status[3] > 0 || status[4] > 0)
+			if (status[0] > 0 || status[2] > 0 || status[3] > 0 || status[4] > 0)
 			{
-				if(status[3] > 0)
+				if (status[3] > 0)
 				{
 					commStatusText = "Status_Banned";
 				}
@@ -400,7 +416,7 @@ public Action Command_List(int client, int args)
 					commStatusText = "Status_None";
 				}
 
-				switch(status[4])
+				switch (status[4])
 				{
 					case 1:
 						econStatusText = "Status_Probation";
@@ -428,6 +444,7 @@ void UpdateClientStatus(int client, const char[] response)
 	LogToFile(g_debugLogPath, "Updating %L", client);
 	LogToFileEx(g_debugLogPath, response);
 #endif
+
 	g_clientStatus[client] = {0, 0, 0, 0, 0};
 
 	char responseData[1024];
@@ -444,36 +461,36 @@ void UpdateClientStatus(int client, const char[] response)
 	char parts[16][64];
 	int count = ExplodeString(responseData, ",", parts, sizeof(parts), sizeof(parts[]));
 	char kv[2][64];
-	for(int i = 0; i < count; i++)
+	for (int i = 0; i < count; i++)
 	{
-		if(ExplodeString(parts[i], ":", kv, sizeof(kv), sizeof(kv[])) < 2)
+		if (ExplodeString(parts[i], ":", kv, sizeof(kv), sizeof(kv[])) < 2)
 		{
 			continue;
 		}
 
-		if(StrEqual(kv[0], "NumberOfVACBans"))
+		if (StrEqual(kv[0], "NumberOfVACBans"))
 		{
 			g_clientStatus[client][0] = StringToInt(kv[1]);
 		}
-		else if(StrEqual(kv[0], "DaysSinceLastBan"))
+		else if (StrEqual(kv[0], "DaysSinceLastBan"))
 		{
 			g_clientStatus[client][1] = StringToInt(kv[1]);
 		}
-		else if(StrEqual(kv[0], "NumberOfGameBans"))
+		else if (StrEqual(kv[0], "NumberOfGameBans"))
 		{
 			g_clientStatus[client][2] = StringToInt(kv[1]);
 		}
-		else if(StrEqual(kv[0], "CommunityBanned"))
+		else if (StrEqual(kv[0], "CommunityBanned"))
 		{
 			g_clientStatus[client][3] = StrEqual(kv[1], "true", false) ? 1 : 0;
 		}
-		else if(StrEqual(kv[0], "EconomyBan"))
+		else if (StrEqual(kv[0], "EconomyBan"))
 		{
-			if(StrEqual(kv[1], "probation", false))
+			if (StrEqual(kv[1], "probation", false))
 			{
 				g_clientStatus[client][4] = 1;
 			}
-			else if(StrEqual(kv[1], "banned", false))
+			else if (StrEqual(kv[1], "banned", false))
 			{
 				g_clientStatus[client][4] = 2;
 			}
@@ -490,11 +507,11 @@ void UpdateClientStatus(int client, const char[] response)
  */
 void HandleClient(int client, const char[] steamID, bool fromCache)
 {
-	if(IsClientAuthorized(client))
+	if (IsClientAuthorized(client))
 	{
 		// Check to make sure this is the same client that originally connected
 		char clientSteamID[18];
-		if(!GetClientAuthId(client, AuthId_SteamID64, clientSteamID, sizeof(clientSteamID)) || !StrEqual(steamID, clientSteamID))
+		if (!GetClientAuthId(client, AuthId_SteamID64, clientSteamID, sizeof(clientSteamID)) || !StrEqual(steamID, clientSteamID))
 		{
 			return;
 		}
@@ -511,12 +528,12 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 		bool econBanned = econStatus > 1 && g_hCVDetectEconBans.BoolValue;
 		bool econProbation = econStatus > 0 && g_hCVDetectEconBans.IntValue > 1;
 
-		if(vacBanned && g_hCVVACExpire.BoolValue)
+		if (vacBanned && g_hCVVACExpire.BoolValue)
 		{
 			vacBanned = daysSinceLastVAC < g_hCVVACExpire.IntValue;
 		}
 
-		if(vacBanned && g_VACEpoch > 0)
+		if (vacBanned && g_VACEpoch > 0)
 		{
 			char banTimeString[9];
 			FormatTime(banTimeString, sizeof(banTimeString), "%Y%m%d", GetTime() - (daysSinceLastVAC * 86400));
@@ -525,42 +542,42 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 			vacBanned = banTime > g_VACEpoch;
 		}
 
-		if(vacBanned || gameBanned || commBanned || econBanned || econProbation)
+		if (vacBanned || gameBanned || commBanned || econBanned || econProbation)
 		{
 			int actions = g_hCVActions.IntValue;
 
 			char reason[32];
-			if(vacBanned && numVACBans > 1)
+			if (vacBanned && numVACBans > 1)
 			{
 				reason = "VAC_Ban_Plural";
 			}
-			else if(vacBanned)
+			else if (vacBanned)
 			{
 				reason = "VAC_Ban";
 			}
-			else if(gameBanned && numGameBans > 1)
+			else if (gameBanned && numGameBans > 1)
 			{
 				reason = "Game_Ban_Plural";
 			}
-			else if(gameBanned)
+			else if (gameBanned)
 			{
 				reason = "Game_Ban";
 			}
-			else if(commBanned)
+			else if (commBanned)
 			{
 				reason = "Community_Ban";
 			}
-			else if(econBanned)
+			else if (econBanned)
 			{
 				reason = "Economy_Ban";
 			}
-			else if(econProbation)
+			else if (econProbation)
 			{
 				reason = "Economy_Probation";
 			}
 
 			char commStatusText[16];
-			if(communityBanned)
+			if (communityBanned)
 			{
 				commStatusText = "Status_Banned";
 			}
@@ -570,7 +587,7 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 			}
 
 			char econStatusText[24];
-			switch(econStatus)
+			switch (econStatus)
 			{
 				case 1:
 					econStatusText = "Status_Probation";
@@ -580,14 +597,14 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 					econStatusText = "Status_None";
 			}
 
-			if(actions & ACTION_LOG)
+			if (actions & ACTION_LOG)
 			{
 				char path[PLATFORM_MAX_PATH];
 				BuildPath(Path_SM, path, sizeof(path), "logs/vacbans.log");
 				LogToFile(path, "%L %T", client, "Admin_Message", LANG_SERVER, numVACBans, numGameBans, commStatusText, econStatusText);
 			}
 
-			if(actions & ACTION_BAN)
+			if (actions & ACTION_BAN)
 			{
 				char userformat[64];
 				Format(userformat, sizeof(userformat), "%L", client);
@@ -595,21 +612,21 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 
 				ServerCommand("sm_ban #%d 0 \"[VAC Status Checker] %T\"", GetClientUserId(client), "Player_Message", client, "Banned", reason);
 			}
-			else if(actions & ACTION_KICK)
+			else if (actions & ACTION_KICK)
 			{
 				KickClient(client, "[VAC Status Checker] %t", "Player_Message", "Kicked", reason);
 			}
 
-			if(actions & ACTION_NOTIFY_ALL || actions & ACTION_NOTIFY_ADMINS)
+			if (actions & ACTION_NOTIFY_ALL || actions & ACTION_NOTIFY_ADMINS)
 			{
-				for(int i = 1; i <= MaxClients; i++)
+				for (int i = 1; i <= MaxClients; i++)
 				{
-					if(!IsClientInGame(i) || IsFakeClient(i))
+					if (!IsClientInGame(i) || IsFakeClient(i))
 					{
 						continue;
 					}
 
-					if(!(actions & ACTION_NOTIFY_ALL) && !CheckCommandAccess(i, "sm_vacbans_list", ADMFLAG_KICK))
+					if (!(actions & ACTION_NOTIFY_ALL) && !CheckCommandAccess(i, "sm_vacbans_list", ADMFLAG_KICK))
 					{
 						continue;
 					}
@@ -619,7 +636,7 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 			}
 		}
 
-		if(!fromCache)
+		if (!fromCache)
 		{
 			int expire = GetTime() + g_hCVCacheTime.IntValue * 86400;
 			char query[256];
@@ -641,15 +658,15 @@ bool GetSteamID64(const char[] steamIDString, char[] steamID64, int maxlen)
 	char toks[3][18];
 	int parts = ExplodeString(steamIDString, ":", toks, sizeof(toks), sizeof(toks[]));
 	int iSteamID;
-	if(parts == 3)
+	if (parts == 3)
 	{
-		if(StrContains(toks[0], "STEAM_", false) >= 0)
+		if (StrContains(toks[0], "STEAM_", false) >= 0)
 		{
 			int iServer = StringToInt(toks[1]);
 			int iAuthID = StringToInt(toks[2]);
 			iSteamID = (iAuthID*2) + 60265728 + iServer;
 		}
-		else if(StrEqual(toks[0], "[U", false))
+		else if (StrEqual(toks[0], "[U", false))
 		{
 			ReplaceString(toks[2], sizeof(toks[]), "]", "");
 			int iAuthID = StringToInt(toks[2]);
@@ -661,7 +678,7 @@ bool GetSteamID64(const char[] steamIDString, char[] steamID64, int maxlen)
 			return false;
 		}
 	}
-	else if(strlen(toks[0]) == 17 && IsCharNumeric(toks[0][0]))
+	else if (strlen(toks[0]) == 17 && IsCharNumeric(toks[0][0]))
 	{
 		strcopy(steamID64, maxlen, steamIDString);
 		return true;
@@ -696,17 +713,18 @@ bool GetSteamID64(const char[] steamIDString, char[] steamID64, int maxlen)
 // Threaded DB callbacks
 public void OnDBConnected(Database db, const char[] error, any data)
 {
-	if(db == null)
+	if (db == null)
 	{
 		SetFailState(error);
 	}
+
 	g_hDatabase = db;
 	g_hDatabase.Query(OnQueryVersionCheck, "SELECT `version` FROM `vacbans_version`;");
 }
 
 public void OnQueryVersionCheck(Database db, DBResultSet results, const char[] error, any data)
 {
-	if(results == null || !results.FetchRow())
+	if (results == null || !results.FetchRow())
 	{
 		g_hDatabase.Query(OnQueryVersionCreated, "CREATE TABLE `vacbans_version` (`version` INT(11) NOT NULL);");
 		g_hDatabase.Query(OnQueryCacheCreated, "CREATE TABLE `vacbans_cache` (`steam_id` VARCHAR(64) NOT NULL, `vac_bans` INT(11), `last_vac_time` INT(11), `game_bans` INT(11), `community_banned` BOOL, `econ_status` INT(11), `expire` INT(11) NOT NULL, PRIMARY KEY (`steam_id`));");
@@ -722,7 +740,7 @@ public void OnQueryVersionCreated(Database db, DBResultSet results, const char[]
 
 public void OnQueryCacheCreated(Database db, DBResultSet results, const char[] error, any data)
 {
-	if(results != null)
+	if (results != null)
 	{
 		g_hDatabase.Query(OnQueryMigrate, "SELECT `steam_id` FROM `vacbans` WHERE `banned` = 0 AND `expire` = 0;");
 	}
@@ -730,11 +748,11 @@ public void OnQueryCacheCreated(Database db, DBResultSet results, const char[] e
 
 public void OnQueryMigrate(Database db, DBResultSet results, const char[] error, any data)
 {
-	if(results != null)
+	if (results != null)
 	{
 		char steamId[18];
 		char query[128];
-		while(results.FetchRow())
+		while (results.FetchRow())
 		{
 			results.FetchString(0, steamId, sizeof(steamId));
 			Format(query, sizeof(query), "INSERT INTO `vacbans_cache` (`steam_id`, `expire`) VALUES ('%s', 0);", steamId);
@@ -753,9 +771,9 @@ public void OnQueryPlayerLookup(Database db, DBResultSet results, const char[] e
 	data.ReadString(steamID, sizeof(steamID));
 	delete data;
 
-	if(results != null)
+	if (results != null)
 	{
-		if(results.FetchRow())
+		if (results.FetchRow())
 		{
 			checked = results.FetchInt(6) > GetTime();
 
@@ -765,7 +783,7 @@ public void OnQueryPlayerLookup(Database db, DBResultSet results, const char[] e
 			g_clientStatus[client][3] = results.FetchInt(4);
 			g_clientStatus[client][4] = results.FetchInt(5);
 
-			if(results.FetchInt(6) == 0)
+			if (results.FetchInt(6) == 0)
 			{
 				// Player is whitelisted
 				return;
@@ -773,10 +791,9 @@ public void OnQueryPlayerLookup(Database db, DBResultSet results, const char[] e
 		}
 	}
 
-	if(checked)
+	if (checked)
 	{
 		HandleClient(client, steamID, true);
-
 	}
 	else
 	{
@@ -792,9 +809,11 @@ void ConnectToApi(int client, const char[] steamID)
 	{
 		return;
 	}
+
 #if defined DEBUG
 	LogToFile(g_debugLogPath, "Checking client %L", client);
 #endif
+
 #if defined _SteamWorks_Included
 	if (STEAMWORKS_AVAILABLE())
 	{
@@ -802,6 +821,7 @@ void ConnectToApi(int client, const char[] steamID)
 		return;
 	}
 #endif
+
 #if defined _socket_included
 	if (SOCKET_AVAILABLE())
 	{

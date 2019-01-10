@@ -3,6 +3,7 @@ void SteamWorksConnectToApi(int client, const char[] steamID)
 #if defined DEBUG
 	LogToFile(g_debugLogPath, "Using SteamWorks");
 #endif
+
 	DataPack hPack = new DataPack();
 	hPack.WriteCell(client);
 	hPack.WriteString(steamID);
