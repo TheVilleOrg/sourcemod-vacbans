@@ -127,7 +127,7 @@ public void OnPluginStart()
 
 	if (!STEAMWORKS_AVAILABLE() && !STEAMTOOLS_AVAILABLE() && !SOCKET_AVAILABLE())
 	{
-		SetFailState("%T", "Extension_Required", LANG_SERVER);
+		SetFailState("%T", "Error_Extension_Required", LANG_SERVER);
 	}
 
 	Format(desc, sizeof(desc), "%T", "ConVar_Version", LANG_SERVER);

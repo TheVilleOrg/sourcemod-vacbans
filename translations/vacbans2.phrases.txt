@@ -86,7 +86,7 @@
 	{
 		"en"		"Listing bans of all connected clients:"
 	}
-	"Extension_Required"
+	"Error_Extension_Required"
 	{
 		"en"		"SteamWorks, SteamTools, or Socket extension required"
 	}
