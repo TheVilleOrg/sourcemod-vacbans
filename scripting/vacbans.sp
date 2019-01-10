@@ -26,7 +26,7 @@
 #define DEBUG
 
 #if defined _updater_included
-#define UPDATE_URL "http://dev.stevotvr.com/vacbans/updater/updatefile.txt"
+#define UPDATE_URL "//dev.stevotvr.com/vacbans/updater/updatefile.txt"
 #endif
 
 #define API_HOST "api.steampowered.com"
@@ -162,12 +162,12 @@ public void OnPluginStart()
 	Format(desc, sizeof(desc), "%T", "Command_List", LANG_SERVER);
 	RegAdminCmd("sm_vacbans_list", Command_List, ADMFLAG_KICK, desc);
 
-	#if defined _updater_included
+#if defined _updater_included
 	if (LibraryExists("updater"))
 	{
-		Updater_AddPlugin(UPDATE_URL);
+		InitUpdater();
 	}
-	#endif
+#endif
 }
 
 #if defined _updater_included
@@ -175,8 +175,27 @@ public void OnLibraryAdded(const char[] name)
 {
 	if (StrEqual(name, "updater"))
 	{
-		Updater_AddPlugin(UPDATE_URL);
+		InitUpdater();
 	}
+	else if (LibraryExists("updater") && (StrEqual(name, "Socket") || StrEqual(name, "SteamWorks")))
+	{
+		Updater_RemovePlugin();
+		InitUpdater();
+	}
+}
+
+void InitUpdater()
+{
+	char url[128];
+	if (STEAMWORKS_AVAILABLE())
+	{
+		Format(url, sizeof(url), "https:%s", UPDATE_URL);
+	}
+	else
+	{
+		Format(url, sizeof(url), "http:%s", UPDATE_URL);
+	}
+	Updater_AddPlugin(url);
 }
 #endif
 
