@@ -9,6 +9,7 @@
  */
 
 #include <sourcemod>
+#include <vacbans>
 
 #undef REQUIRE_EXTENSIONS
 #tryinclude <SteamWorks>
@@ -101,6 +102,12 @@ char g_debugLogPath[PLATFORM_MAX_PATH];
 #include "vacbans/socket.sp"
 #endif
 
+/**
+ * Forwards
+ */
+Handle OnDetectedClient;
+#include <vacbans>
+
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	MarkNativeAsOptional("Steam_CreateHTTPRequest");
@@ -112,6 +119,8 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("SocketSetArg");
 	MarkNativeAsOptional("SocketConnect");
 	MarkNativeAsOptional("SocketSend");
+
+	OnDetectedClient = CreateGlobalForward("Vacbans_OnDetectedClient", ET_Ignore, Param_Cell, Param_String, Param_Cell, Param_Cell, Param_String, Param_String);
 
 	return APLRes_Success;
 }
@@ -608,6 +617,15 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 				default:
 					econStatusText = "Status_None";
 			}
+
+			Call_StartForward(OnDetectedClient);
+			Call_PushCell(client);
+			Call_PushString(steamID);
+			Call_PushCell(numVACBans);
+			Call_PushCell(numGameBans);
+			Call_PushString(commStatusText);
+			Call_PushString(econStatusText);
+			Call_Finish();
 
 			if (actions & ACTION_LOG)
 			{
