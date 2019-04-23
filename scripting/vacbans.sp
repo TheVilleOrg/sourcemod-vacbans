@@ -106,7 +106,6 @@ char g_debugLogPath[PLATFORM_MAX_PATH];
  * Forwards
  */
 Handle OnDetectedClient;
-#include <vacbans>
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
