@@ -33,11 +33,12 @@ enum Vacbans_EconStatus {
 /**
  * Called when a client is checked by VAC Status Checker.
  *
- * @param client      The client index
- * @param steamID     The client's 64 bit SteamID
- * @param numVACBans  The number of VAC bans on record for the client
- * @param numGameBans The number of game bans on record for the client
- * @param commStatus  The Vacbans_CommStatus value representing the client's Steam communication status
- * @param econStatus  The Vacbans_EconStatus value representing the client's Steam economy status
+ * @param client           The client index
+ * @param steamID          The client's 64 bit SteamID
+ * @param numVACBans       The number of VAC bans on record for the client
+ * @param daysSinceLastVAC The number of days since the client's last VAC ban
+ * @param numGameBans      The number of game bans on record for the client
+ * @param commStatus       The Vacbans_CommStatus value representing the client's Steam communication status
+ * @param econStatus       The Vacbans_EconStatus value representing the client's Steam economy status
  */
-forward Action Vacbans_OnDetectedClient(int client, const char [] steamID, int numVACBans, int numGameBans, Vacbans_CommStatus:commStatus, Vacbans_EconStatus:econStatus);
+forward Action Vacbans_OnDetectedClient(int client, const char [] steamID, int numVACBans, int daysSinceLastVAC, int numGameBans, Vacbans_CommStatus:commStatus, Vacbans_EconStatus:econStatus);
