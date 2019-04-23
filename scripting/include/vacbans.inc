@@ -1,4 +1,19 @@
 /**
+ *
+ * VAC Status Checker
+ * https://forums.alliedmods.net/showthread.php?t=80942
+ *
+ * Licensed under the GNU General Public License v3.0
+ * Source Repo: https://github.com/stevotvr/sourcemod-vacbans
+ *
+ */
+
+#if defined _vacbans_included
+ #endinput
+#endif
+#define _vacbans_included
+
+/**
  * Enumeration of communication statuses.
  */
 enum Vacbans_CommStatus {
