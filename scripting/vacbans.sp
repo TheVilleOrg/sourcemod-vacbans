@@ -841,7 +841,7 @@ void ConnectToApi(int client, const char[] steamID)
 	}
 
 #if defined DEBUG
-	LogToFile(g_debugLogPath, "Checking client %L", client);
+	LogToFile(g_debugLogPath, "Checking client %s", steamID);
 #endif
 
 #if defined _steamtools_included
