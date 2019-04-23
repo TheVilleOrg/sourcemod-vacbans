@@ -542,6 +542,16 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 		bool communityBanned = g_clientStatus[client][3] == 1;
 		int econStatus = g_clientStatus[client][4];
 
+		Call_StartForward(OnDetectedClient);
+		Call_PushCell(client);
+		Call_PushString(steamID);
+		Call_PushCell(numVACBans);
+		Call_PushCell(daysSinceLastVAC);
+		Call_PushCell(numGameBans);
+		Call_PushCell(communityBanned);
+		Call_PushCell(econStatus);
+		Call_Finish();
+
 		bool vacBanned = numVACBans > 0 && g_hCVDetectVACBans.BoolValue;
 		bool gameBanned = numGameBans > 0 && g_hCVDetectGameBans.BoolValue;
 		bool commBanned = communityBanned && g_hCVDetectCommunityBans.BoolValue;
@@ -616,16 +626,6 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 				default:
 					econStatusText = "Status_None";
 			}
-
-			Call_StartForward(OnDetectedClient);
-			Call_PushCell(client);
-			Call_PushString(steamID);
-			Call_PushCell(numVACBans);
-			Call_PushCell(daysSinceLastVAC);
-			Call_PushCell(numGameBans);
-			Call_PushCell(communityBanned);
-			Call_PushCell(econStatus);
-			Call_Finish();
 
 			if (actions & ACTION_LOG)
 			{
