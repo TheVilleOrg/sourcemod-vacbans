@@ -119,7 +119,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 	MarkNativeAsOptional("SocketConnect");
 	MarkNativeAsOptional("SocketSend");
 
-	OnDetectedClient = CreateGlobalForward("Vacbans_OnDetectedClient", ET_Ignore, Param_Cell, Param_String, Param_Cell, Param_Cell, Param_String, Param_String);
+	OnDetectedClient = CreateGlobalForward("Vacbans_OnDetectedClient", ET_Ignore, Param_Cell, Param_String, Param_Cell, Param_Cell, Param_Cell, Param_Cell);
 
 	return APLRes_Success;
 }
@@ -622,8 +622,8 @@ void HandleClient(int client, const char[] steamID, bool fromCache)
 			Call_PushString(steamID);
 			Call_PushCell(numVACBans);
 			Call_PushCell(numGameBans);
-			Call_PushString(commStatusText);
-			Call_PushString(econStatusText);
+			Call_PushCell(communityBanned);
+			Call_PushCell(econStatus);
 			Call_Finish();
 
 			if (actions & ACTION_LOG)
