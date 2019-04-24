@@ -3,7 +3,7 @@
 ## v2.4.0 (Apr 23, 2019)
 
  * Added Vacbans_OnDetectedClient native forward
- * Fixed potential crash when debug mode enabled
+ * Fixed potential crash when debug mode is enabled
 
 ## v2.3.0 (Jan 10, 2019)
 
