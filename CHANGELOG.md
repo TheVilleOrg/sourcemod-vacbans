@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.4.0 (Apr 23, 2019)
+
+ * Added Vacbans_OnDetectedClient native forward
+ * Fixed potential crash when debug mode enabled
+
 ## v2.3.0 (Jan 10, 2019)
 
  * Added support for the SteamWorks and SteamTools extensions
