@@ -25,7 +25,7 @@
 #define PLUGIN_VERSION "2.4.0"
 #define DATABASE_VERSION 1
 
-#define DEBUG
+// #define DEBUG
 
 #if defined _updater_included
 #define UPDATE_URL "//dev.stevotvr.com/vacbans/updater/updatefile.txt"
