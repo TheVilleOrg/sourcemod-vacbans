@@ -22,7 +22,7 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define PLUGIN_VERSION "2.4.0"
+#define PLUGIN_VERSION "2.5.0"
 #define DATABASE_VERSION 1
 
 // #define DEBUG
@@ -65,6 +65,7 @@ ConVar g_hCVVACEpoch = null;
 ConVar g_hCVDetectGameBans = null;
 ConVar g_hCVDetectCommunityBans = null;
 ConVar g_hCVDetectEconBans = null;
+ConVar g_hCVImmunityFlag = null;
 
 /**
  * The name of the database configuration
@@ -173,6 +174,9 @@ public void OnPluginStart()
 
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_Econ", LANG_SERVER);
 	g_hCVDetectEconBans = CreateConVar("sm_vacbans_detect_econ_bans", "0", desc, _, true, 0.0, true, 2.0);
+
+	Format(desc, sizeof(desc), "%T", "ConVar_Immunity_Flag", LANG_SERVER);
+	g_hCVImmunityFlag = CreateConVar("sm_vacbans_immunity_flag", "", desc);
 
 	AutoExecConfig(true, "vacbans");
 
@@ -338,6 +342,21 @@ public void OnClientPostAdminCheck(int client)
 {
 	if (!IsFakeClient(client))
 	{
+		AdminFlag flag;
+		char flagString[2];
+		g_hCVImmunityFlag.GetString(flagString, sizeof(flagString));
+		if (FindFlagByChar(flagString[0], flag))
+		{
+			AdminId admin = GetUserAdmin(client);
+			if (admin.HasFlag(flag, Access_Effective))
+			{
+#if defined DEBUG
+				LogToFile(g_debugLogPath, "Skipping check on client %L due to immunity flag", client);
+#endif
+				return;
+			}
+		}
+
 		char query[96];
 		char steamID[18];
 
