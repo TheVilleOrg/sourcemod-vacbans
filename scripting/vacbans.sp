@@ -347,8 +347,9 @@ public void OnClientPostAdminCheck(int client)
 		g_hCVImmunityFlag.GetString(flagString, sizeof(flagString));
 		if (FindFlagByChar(flagString[0], flag))
 		{
-			AdminId admin = GetUserAdmin(client);
-			if (admin.HasFlag(flag, Access_Effective))
+			int flagBits = FlagToBit(flag);
+			int userBits = GetUserFlagBits(client);
+			if ((userBits & flagBits) == flagBits || (userBits & ADMFLAG_ROOT) == ADMFLAG_ROOT)
 			{
 #if defined DEBUG
 				LogToFile(g_debugLogPath, "Skipping check on client %L due to immunity flag", client);
