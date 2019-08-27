@@ -25,7 +25,7 @@
 #define PLUGIN_VERSION "2.5.0"
 #define DATABASE_VERSION 1
 
-// #define DEBUG
+#define DEBUG 0
 
 #if defined _updater_included
 #define UPDATE_URL "//dev.stevotvr.com/vacbans/updater/updatefile.txt"
@@ -86,7 +86,7 @@ int g_clientStatus[MAXPLAYERS + 1][5];
  */
 char g_baseUrl[128];
 
-#if defined DEBUG
+#if DEBUG
 char g_debugLogPath[PLATFORM_MAX_PATH];
 #endif
 
@@ -126,7 +126,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public void OnPluginStart()
 {
-#if defined DEBUG
+#if DEBUG
 	BuildPath(Path_SM, g_debugLogPath, sizeof(g_debugLogPath), "logs/vacbans_debug.log");
 #endif
 
@@ -340,7 +340,7 @@ public void OnClientPostAdminCheck(int client)
 	{
 		if (CheckCommandAccess(client, "sm_vacbans_immunity", ADMFLAG_RCON, true))
 		{
-#if defined DEBUG
+#if DEBUG
 			LogToFile(g_debugLogPath, "Skipping check on client %L due to immunity flag", client);
 #endif
 			return;
@@ -468,7 +468,7 @@ public Action Command_List(int client, int args)
  */
 void UpdateClientStatus(int client, const char[] response)
 {
-#if defined DEBUG
+#if DEBUG
 	LogToFile(g_debugLogPath, "Updating %L", client);
 	LogToFileEx(g_debugLogPath, response);
 #endif
@@ -848,7 +848,7 @@ void ConnectToApi(int client, const char[] steamID)
 		return;
 	}
 
-#if defined DEBUG
+#if DEBUG
 	LogToFile(g_debugLogPath, "Checking client %L", client);
 #endif
 

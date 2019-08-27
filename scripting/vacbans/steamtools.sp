@@ -1,6 +1,6 @@
 void SteamToolsConnectToApi(int client, const char[] steamID)
 {
-#if defined DEBUG
+#if DEBUG
 	LogToFile(g_debugLogPath, "Using SteamTools");
 #endif
 
