@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.5.0 (Aug 27, 2019)
+
+ * Added sm_vacbans_immunity override to provide immunity to admins
+
 ## v2.4.0 (Apr 23, 2019)
 
  * Added Vacbans_OnDetectedClient native forward
