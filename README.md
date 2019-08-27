@@ -105,6 +105,10 @@ sm_vacbans_vac_ignore_before ""
     * clear - removes all SteamIDs from the whitelist
  * **sm_vacbans_list** - Lists the bans of connected clients. Admins with access to this also see the connect messages when sm_vacbans_action is 2.
 
+ ## Override Commands
+
+ * **sm_vacbans_immunity** - Users with access to this command will not be checked for bans (defaults to RCON access)
+
  ## Notes
 
  * All account data comes from the Steam Web API.
