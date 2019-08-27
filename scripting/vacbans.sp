@@ -65,7 +65,6 @@ ConVar g_hCVVACEpoch = null;
 ConVar g_hCVDetectGameBans = null;
 ConVar g_hCVDetectCommunityBans = null;
 ConVar g_hCVDetectEconBans = null;
-ConVar g_hCVImmunityFlag = null;
 
 /**
  * The name of the database configuration
@@ -174,9 +173,6 @@ public void OnPluginStart()
 
 	Format(desc, sizeof(desc), "%T", "ConVar_Detect_Econ", LANG_SERVER);
 	g_hCVDetectEconBans = CreateConVar("sm_vacbans_detect_econ_bans", "0", desc, _, true, 0.0, true, 2.0);
-
-	Format(desc, sizeof(desc), "%T", "ConVar_Immunity_Flag", LANG_SERVER);
-	g_hCVImmunityFlag = CreateConVar("sm_vacbans_immunity_flag", "", desc);
 
 	AutoExecConfig(true, "vacbans");
 
@@ -342,20 +338,12 @@ public void OnClientPostAdminCheck(int client)
 {
 	if (!IsFakeClient(client))
 	{
-		AdminFlag flag;
-		char flagString[2];
-		g_hCVImmunityFlag.GetString(flagString, sizeof(flagString));
-		if (FindFlagByChar(flagString[0], flag))
+		if (CheckCommandAccess(client, "sm_vacbans_immunity", ADMFLAG_RCON, true))
 		{
-			int flagBits = FlagToBit(flag);
-			int userBits = GetUserFlagBits(client);
-			if ((userBits & flagBits) == flagBits || (userBits & ADMFLAG_ROOT) == ADMFLAG_ROOT)
-			{
 #if defined DEBUG
-				LogToFile(g_debugLogPath, "Skipping check on client %L due to immunity flag", client);
+			LogToFile(g_debugLogPath, "Skipping check on client %L due to immunity flag", client);
 #endif
-				return;
-			}
+			return;
 		}
 
 		char query[96];

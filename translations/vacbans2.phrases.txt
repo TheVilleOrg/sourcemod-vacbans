@@ -48,10 +48,6 @@
 	{
 		"en"		"Enable economy (trade) ban detection (0 = disabled, 1 = bans only, 2 = bans and probation)"
 	}
-	"ConVar_Immunity_Flag"
-	{
-		"en"		"Admin flag to provide immunity"
-	}
 	"Command_Reset"
 	{
 		"en"		"Clears the vacbans cache database"
