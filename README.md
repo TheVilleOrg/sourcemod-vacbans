@@ -94,14 +94,14 @@ sm_vacbans_vac_ignore_before ""
 
 ## Console Commands
 * **sm_vacbans_reset** - Clears the cache database. Run from server console or client with sm_rcon access;
-* **sm_vacbans_whitelist** <add|remove|clear> [SteamID] - Run from the server console or client with sm_rcon access to control the whitelist:
+* **sm_vacbans_whitelist <add|remove|clear> [SteamID]** - Run from the server console or client with sm_rcon access to control the whitelist:
 	* **add <SteamID>** - adds a SteamID for the plugin to ignore;
 	* **remove <SteamID>** - removes a SteamID from the whitelist;
 	* **clear** - removes all SteamIDs from the whitelist;
 * **sm_vacbans_list** - Lists the bans of connected clients. Admins with access to this also see the connect messages when sm_vacbans_action is 2;
 
 ## Override Commands
-* **sm_vacbans_immunity** - Users with access to this command will not be checked for bans; (defaults to RCON access)
+* **sm_vacbans_immunity** - Users with access to this command will not be checked for bans; ***(defaults to RCON access)***
 
  ## Notes
 * All account data comes from the Steam Web API.
