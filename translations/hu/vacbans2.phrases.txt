@@ -1,0 +1,15 @@
+"Phrases"
+{
+	"Kicked"
+	{
+		"hu"		"Ki lettél rugva a VAC banos accountod miatt."
+	}
+	"Banned"
+	{
+		"en"		"Ki lettél tiltva a VAC banos accountod miatt."
+	}
+	"Banned_Server"
+	{
+		"en"		"Kitiltva VAC banos account miatt."
+	}
+}

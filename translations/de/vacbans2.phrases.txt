@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+        "de"        "Du wurdest aufgrund einer früheren VAC Verletzung gekickt."
+    }
+    "Banned"
+    {
+        "de"        "Du wurdest aufgrund einer früheren VAC Verletzung gebannt."
+    }
+    "Banned_Server"
+    {
+        "de"        "{1} aufgrund einer früheren VAC Verletzung gebannt."
+    }
+}

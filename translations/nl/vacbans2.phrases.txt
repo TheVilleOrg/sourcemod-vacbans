@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+        "nl"        "U bent gekicked wegens een voorgaande VAC overtreding."
+    }
+    "Banned"
+    {
+        "nl"        "U bent gebanned wegens een voorgaande VAC overtreding."
+    }
+    "Banned_Server"
+    {
+        "nl"        "Gebanned wegens een voorgaande VAC overtreding."
+    }
+}

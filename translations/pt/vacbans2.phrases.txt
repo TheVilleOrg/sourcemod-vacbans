@@ -1,0 +1,155 @@
+"Phrases"
+{
+	"ConVar_Version"
+	{
+		"pt"		"VAC Status Checker plugin version"
+	}
+	"ConVar_DB"
+	{
+		"pt"		"The named database config to use for caching"
+	}
+	"ConVar_APIKey"
+	{
+		"pt"		"Steam Web API Key usada pelo VAC Status Checker\nhttps://steamcommunity.com/dev/apikey"
+	}
+	"ConVar_CacheTime"
+	{
+		"pt"		"Quanto tempo em dias antes de verificar novamente o mesmo cliente"
+	}
+	"ConVar_Action"
+	{
+		"pt"		"Deprecated. Use sm_vacbans_actions"
+	}
+	"ConVar_Actions"
+	{
+		"pt"		"Actions to take on detected clients\nAdd up the options from the list:\n1:  Log to sourcemod/logs/vacbans.log\n2:  Kick\n4:  Ban\n8:  Display message to admins\n16: Display message to all players"
+	}
+	"ConVar_Detect_VAC"
+	{
+		"pt"		"Enable VAC ban detection"
+	}
+	"ConVar_VAC_Expire"
+	{
+		"pt"		"Ignore VAC bans older than this many days (0 = disabled)"
+	}
+	"ConVar_VAC_Ignore_Before"
+	{
+		"pt"		"Ignore VAC bans issued before this date (format: YYYY-MM-DD)"
+	}
+	"ConVar_Detect_Game"
+	{
+		"pt"		"Enable game ban detection"
+	}
+	"ConVar_Detect_Community"
+	{
+		"pt"		"Enable Steam Community ban detection"
+	}
+	"ConVar_Detect_Econ"
+	{
+		"pt"		"Enable economy (trade) ban detection (0 = disabled, 1 = bans only, 2 = bans and probation)"
+	}
+	"Command_Reset"
+	{
+		"pt"		"Clears the vacbans cache database"
+	}
+	"Command_Whitelist"
+	{
+		"pt"		"Controls the vacbans whitelist"
+	}
+	"Command_List"
+	{
+		"pt"		"Lists the bans of connected clients"
+	}
+	"Message_Reset"
+	{
+		"pt"		"The VAC Status Checker cache has been reset"
+	}
+	"Message_Usage"
+	{
+		"pt"		"Usage"
+	}
+	"Message_Whitelist_Added"
+	{
+		"pt"		"{1} foi adicionado na Whitelist VAC Status Checker"
+	}
+	"Message_Whitelist_Removed"
+	{
+		"pt"		"{1} foi removido da Whitelist VAC Status Checker"
+	}
+	"Message_Whitelist_Cleared"
+	{
+		"pt"		"VAC Status Checker Whitelist foi limpa"
+	}
+	"Message_List"
+	{
+		"pt"		"Listing bans of all connected clients:"
+	}
+	"Error_Extension_Required"
+	{
+		"pt"		"Extension SteamWorks, SteamTools ou Socket é necessária"
+	}
+	"Error_Key_Required"
+	{
+		"pt"		"VAC Status Checker requires a Steam Web API key for player lookups. Get your key from https://steamcommunity.com/dev/apikey"
+	}
+	"Kicked"
+	{
+		"pt"		"kickado"
+	}
+	"Banned"
+	{
+		"pt"		"banido"
+	}
+	"Log_Banned"
+	{
+		"pt"		"{1} was banned due to {2} on record"
+	}
+	"Player_Message"
+	{
+		"pt"		"You were {1} due to {2} on your account"
+	}
+	"Admin_Message"
+	{
+		"pt"		"VAC bans: {1}, Game bans: {2}, Community: {3}, Economy: {4}"
+	}
+	"Status_None"
+	{
+		"pt"		"CLEAN"
+	}
+	"Status_Banned"
+	{
+		"pt"		"BANNED"
+	}
+	"Status_Probation"
+	{
+		"pt"		"PROBATION"
+	}
+	"VAC_Ban"
+	{
+		"pt"		"a VAC ban"
+	}
+	"Game_Ban"
+	{
+		"pt"		"a game ban"
+	}
+	"VAC_Ban_Plural"
+	{
+		"pt"		"VAC bans"
+	}
+	"Game_Ban_Plural"
+	{
+		"pt"		"game bans"
+	}
+	"Community_Ban"
+	{
+		"pt"		"a Steam Community ban"
+	}
+	"Economy_Ban"
+	{
+		"pt"		"an economy ban"
+	}
+	"Economy_Probation"
+	{
+		"pt"		"economy probation"
+	}
+}

@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+		"da"		"Du er blevet fjernet på grund af en forhenværende VAC overtrædelse."
+    }
+    "Banned"
+    {
+		"da"		"Du er blevet bortvist på grund af en forhenværende VAC overtrædelse."
+    }
+    "Banned_Server"
+    {
+		"da"		"{1} bortvist på grund af en forhenværende VAC overtrædelse."
+    }
+}

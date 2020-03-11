@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+        "se"        "Du blev kickad tack var en tidigare VAC överträdelse."  
+    }
+    "Banned"
+    {
+        "se"        "Du blev bannad tack vare en tidigare VAC överträdelse."  
+    }
+    "Banned_Server"
+    {
+        "se"        "{1} bannad tack vare en tidigare VAC överträdelse."  
+    }
+}

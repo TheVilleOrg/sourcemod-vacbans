@@ -1,5 +1,4 @@
 # VAC Status Checker
-
 [![Build Status](https://travis-ci.org/stevotvr/sourcemod-vacbans.svg)](https://travis-ci.org/stevotvr/sourcemod-vacbans)
 [![Latest Release](https://img.shields.io/github/release/stevotvr/sourcemod-vacbans.svg)](https://github.com/stevotvr/sourcemod-vacbans/releases/latest)
 [![Total Downloads](https://img.shields.io/github/downloads/stevotvr/sourcemod-vacbans/total.svg)](https://github.com/stevotvr/sourcemod-vacbans/releases)
@@ -9,22 +8,19 @@
 Plugin for SourceMod that checks for VAC, game, Steam Community, and trade bans on the accounts of connecting clients and takes the desired action. Useful for admins who want to block access to people for bad behavior outside the server.
 
 ## Requirements
-
- * One of the below extensions:
-    * [SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)
-    * [SteamTools](https://forums.alliedmods.net/forumdisplay.php?f=147)
-    * [Socket](https://forums.alliedmods.net/showthread.php?t=67640)
- * A Steam Web API key obtained from https://steamcommunity.com/dev/apikey
- * SourceMod 1.7+
+* One of the below extensions:
+	* [SteamWorks](https://forums.alliedmods.net/showthread.php?t=229556)
+	* [SteamTools](https://forums.alliedmods.net/forumdisplay.php?f=147)
+	* [Socket](https://forums.alliedmods.net/showthread.php?t=67640)
+* A Steam Web API key obtained from https://steamcommunity.com/dev/apikey
+* SourceMod 1.7+
 
  ## Installation
-
- 1. Download **vacbans-x.x.x.zip** from the [latest release](https://github.com/stevotvr/sourcemod-vacbans/releases/latest)
- 2. Extract to **addons/sourcemod**
- 3. Set `sm_vacbans_apikey` to your Steam Web API key
+ 1. Download **vacbans-x.x.x.zip** from the [latest release](https://github.com/stevotvr/sourcemod-vacbans/releases/latest);
+ 2. Extract to **addons/sourcemod**;
+ 3. Set `sm_vacbans_apikey` to your Steam Web API key;
 
  ## Console Variables
-
 ```
 // Actions to take on detected clients
 // Add up the options from the list:
@@ -97,27 +93,24 @@ sm_vacbans_vac_ignore_before ""
 ```
 
 ## Console Commands
+* **sm_vacbans_reset** - Clears the cache database. Run from server console or client with sm_rcon access;
+* **sm_vacbans_whitelist** <add|remove|clear> [SteamID] - Run from the server console or client with sm_rcon access to control the whitelist:
+	* add <SteamID> - adds a SteamID for the plugin to ignore;
+	* remove <SteamID> - removes a SteamID from the whitelist;
+	* clear - removes all SteamIDs from the whitelist;
+* **sm_vacbans_list** - Lists the bans of connected clients. Admins with access to this also see the connect messages when sm_vacbans_action is 2;
 
- * **sm_vacbans_reset** - Clears the cache database. Run from server console or client with sm_rcon access.
- * **sm_vacbans_whitelist** <add|remove|clear> [SteamID] - Run from the server console or client with sm_rcon access to control the whitelist:
-    * add <SteamID> - adds a SteamID for the plugin to ignore
-    * remove <SteamID> - removes a SteamID from the whitelist
-    * clear - removes all SteamIDs from the whitelist
- * **sm_vacbans_list** - Lists the bans of connected clients. Admins with access to this also see the connect messages when sm_vacbans_action is 2.
-
- ## Override Commands
-
- * **sm_vacbans_immunity** - Users with access to this command will not be checked for bans (defaults to RCON access)
+## Override Commands
+* **sm_vacbans_immunity** - Users with access to this command will not be checked for bans; (defaults to RCON access)
 
  ## Notes
-
- * All account data comes from the Steam Web API.
- * This works with SourceBans.
- * Data is logged to **sourcemod/logs/vacbans.log**.
+* All account data comes from the Steam Web API.
+* This works with SourceBans.
+* Data is logged to **sourcemod/logs/vacbans.log**.
 
 ## Credits
-
- * [voogru](https://forums.alliedmods.net/member.php?u=2557): finding the algorithm for converting SteamIDs
- * [berni](https://forums.alliedmods.net/member.php?u=27799) & [strontiumdog](https://forums.alliedmods.net/member.php?u=24573): the function that converts SteamIDs
- * [Cripix](https://forums.alliedmods.net/member.php?u=273837): French translation
- * [Dreizehnt](https://forums.alliedmods.net/member.php?u=266566): Russian translation
+* [voogru](https://forums.alliedmods.net/member.php?u=2557) - Finding the algorithm for converting SteamIDs;
+* [berni](https://forums.alliedmods.net/member.php?u=27799) & [strontiumdog](https://forums.alliedmods.net/member.php?u=24573) - The function that converts SteamIDs;
+* [Cripix](https://forums.alliedmods.net/member.php?u=273837) - French Translations;
+* [Dreizehnt](https://forums.alliedmods.net/member.php?u=266566) - Russian Translations;
+* [crashzk](https://github.com/crashzk)Português-BR Translations + More Translations;

@@ -1,0 +1,15 @@
+"Phrases"
+{
+	"Kicked"
+	{
+		"pl"		"Zostałeś wykopany z powodu aktywnej blokady VAC."
+	}
+	"Banned"
+	{
+		"pl"		"Zostałeś zbanowany z powodu aktywnej blokady VAC."
+	}
+	"Banned_Server"
+	{
+		"pl"		"został zbanowany z powodu aktywnej blokady VAC."
+	}
+}

@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+        "tr"        "Eski bir VAC ihlali yüzünden oyundan atıldınız."
+    }
+    "Banned"
+    {
+        "tr"        "Eski bir VAC ihlali yüzünden yasaklandınız."
+    }
+    "Banned_Server"
+    {
+        "tr"        "eski bir VAC ihlali yüzünden yasaklandı."
+    }
+}

@@ -1,0 +1,15 @@
+"Phrases"
+{
+    "Kicked"
+    {
+        "fi"        "Sinut potkittiin ulos aiempien VAC rikkomusten vuoksi."
+    }
+    "Banned"
+    {
+        "fi"        "Olet saanut porttikiellon aiempien VAC rikkomusten vuoksi."
+    }
+    "Banned_Server"
+    {
+        "fi"        "porttikielto aiempien VAC rikkomusten vuoksi."
+    }
+}

@@ -1,4 +1,4 @@
-﻿"Phrases"
+"Phrases"
 {
 	"ConVar_Version"
 	{
