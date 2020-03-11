@@ -95,9 +95,9 @@ sm_vacbans_vac_ignore_before ""
 ## Console Commands
 * **sm_vacbans_reset** - Clears the cache database. Run from server console or client with sm_rcon access;
 * **sm_vacbans_whitelist** <add|remove|clear> [SteamID] - Run from the server console or client with sm_rcon access to control the whitelist:
-	* add <SteamID> - adds a SteamID for the plugin to ignore;
-	* remove <SteamID> - removes a SteamID from the whitelist;
-	* clear - removes all SteamIDs from the whitelist;
+	* **add <SteamID>** - adds a SteamID for the plugin to ignore;
+	* **remove <SteamID>** - removes a SteamID from the whitelist;
+	* **clear** - removes all SteamIDs from the whitelist;
 * **sm_vacbans_list** - Lists the bans of connected clients. Admins with access to this also see the connect messages when sm_vacbans_action is 2;
 
 ## Override Commands
@@ -113,4 +113,4 @@ sm_vacbans_vac_ignore_before ""
 * [berni](https://forums.alliedmods.net/member.php?u=27799) & [strontiumdog](https://forums.alliedmods.net/member.php?u=24573) - The function that converts SteamIDs;
 * [Cripix](https://forums.alliedmods.net/member.php?u=273837) - French Translations;
 * [Dreizehnt](https://forums.alliedmods.net/member.php?u=266566) - Russian Translations;
-* [crashzk](https://github.com/crashzk)Português-BR Translations + More Translations;
+* [crashzk](https://github.com/crashzk) - Português-BR Translations + More Translations;
